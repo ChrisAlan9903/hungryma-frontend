@@ -3,6 +3,8 @@ import LoginUser from "../pages/Auth/LoginUser.vue";
 import LoginVendor from "../pages/Auth/LoginVendor.vue";
 import RegisterUser from "../pages/Auth/RegisterUser.vue";
 import RegisterVendor from "../pages/Auth/RegisterVendor.vue";
+import UserHome from "../pages/User/UserHome.vue";
+import NavbarUser from "../components/NavbarUser.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +42,19 @@ const router = createRouter({
       name: "register-vendor",
       component: RegisterVendor,
     },
+    {
+      path: "/user/home",
+      name: "user-home",
+      components: {
+        default: UserHome,
+        navigation: NavbarUser,
+      },
+    },
+    // {
+    //   path: "/user/home",
+    //   name: "user-home",
+    //   component: UserHome,
+    // },
   ],
 });
 
