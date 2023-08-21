@@ -21,10 +21,7 @@ import LoginUserForm from "@/components/Auth/LoginUserForm.vue";
 
     <!-- navbar for Auth -->
     <nav
-      :class="[
-        'w-full p-8 flex justify-between bg-gray-200 ',
-        selectedLogin === `user` ? 'bg-opacity-70' : 'bg-opacity-30',
-      ]"
+      :class="['w-full p-8 flex justify-between bg-gray-200 ', 'bg-opacity-70']"
     >
       <h1 class="logo">
         <span class="text-orange-500">H</span>ungryMa<span
