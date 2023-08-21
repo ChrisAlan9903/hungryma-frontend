@@ -31,7 +31,10 @@ import LoginVendorForm from "@/components/Auth/LoginVendorForm.vue";
       </h1>
 
       <div id="select-login" class="flex gap-12">
-        <RouterLink :to="{ name: 'login-user' }" class="hover:text-orange-500">
+        <RouterLink
+          :to="{ name: 'login-user' }"
+          class="text-orange-300 hover:text-orange-500"
+        >
           <p class="hover:underline">Login as a User</p>
         </RouterLink>
       </div>
