@@ -14,6 +14,7 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
         Past Orders
       </h1>
     </div>
+
     <div class="flex-1 bg-orange-300 py-10">
       <!-- table components start-->
       <div class="shadow-lg rounded-lg overflow-scroll mx-4 md:mx-10 bg-white">
@@ -42,6 +43,7 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
               </th>
             </tr>
           </thead>
+
           <tbody class="bg-white">
             <!-------------- Example to loop for : START  ----------------------------->
             <tr>
@@ -73,19 +75,7 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
                 >
               </td>
             </tr>
-            <tr>
-              <td class="py-4 px-6 border-b border-gray-200">Jane Doe</td>
-              <td class="py-4 px-6 border-b border-gray-200 truncate">
-                janedoe@gmail.com
-              </td>
-              <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
-              <td class="py-4 px-6 border-b border-gray-200">
-                <span
-                  class="bg-red-500 text-white py-1 px-2 rounded-full text-xs"
-                  >Inactive</span
-                >
-              </td>
-            </tr>
+
             <!-- Add more rows here -->
           </tbody>
         </table>

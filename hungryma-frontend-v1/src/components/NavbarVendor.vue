@@ -3,7 +3,7 @@
 
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
-import { defineProps } from "vue";
+// import { defineProps } from "vue";
 
 // const vendorPage = ref("");
 
