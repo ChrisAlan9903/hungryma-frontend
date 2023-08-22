@@ -5,6 +5,10 @@ import RegisterUser from "../pages/Auth/RegisterUser.vue";
 import RegisterVendor from "../pages/Auth/RegisterVendor.vue";
 import UserHome from "../pages/User/UserHome.vue";
 import NavbarUser from "../components/NavbarUser.vue";
+import NavbarVendor from "../components/NavbarVendor.vue";
+import VendorCurrentOrder from "../pages/Vendor/VendorCurrentOrder.vue";
+import VendorPastOrder from "../pages/Vendor/VendorPastOrder.vue";
+import VendorMenus from "../pages/Vendor/VendorMenus.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +52,30 @@ const router = createRouter({
       components: {
         default: UserHome,
         navigation: NavbarUser,
+      },
+    },
+    {
+      path: "/vendor/current-order",
+      name: "vendor-current-order",
+      components: {
+        default: VendorCurrentOrder,
+        // navigation: NavbarVendor,
+      },
+    },
+    {
+      path: "/vendor/past-order",
+      name: "vendor-past-order",
+      components: {
+        default: VendorPastOrder,
+        // navigation: NavbarVendor,
+      },
+    },
+    {
+      path: "/vendor/menus",
+      name: "vendor-menus",
+      components: {
+        default: VendorMenus,
+        // navigation: NavbarVendor,
       },
     },
     // {
