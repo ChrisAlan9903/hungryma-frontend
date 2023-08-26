@@ -1,9 +1,47 @@
 <script setup>
+import { ref, onMounted } from "vue";
 import NavbarVendor from "../../components/NavbarVendor.vue";
+import { useCurrentUserStore } from "../../store/currentUser";
+
+// Set Up: pinia store for currentUser
+const currentUserStore = useCurrentUserStore();
+const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
+
+// Set Up: get Token from localStorage
+const accessToken = localStorage.getItem("accessToken");
+
+// Set Up: Creating function to get userInfo based on the token
+async function getUserInfo() {
+  // get current vendor Information to store in Pinia
+  const accessToken = localStorage.getItem("access_token");
+  console.log(`accessToken from localStorage:`, accessToken);
+  console.log(`CP: does it pass here?`);
+  setToken(accessToken);
+  console.log(`CP: does it pass here too?`);
+  console.log(`token from pinia:`, token);
+  await getCurrentUser();
+  console.log(`currentUser from pinia: `, currentUser);
+}
+
+// Set Up: Run get User info when page is Mounted
+onMounted(async () => {
+  await getUserInfo();
+  console.log(`getUserInfo has completed. Check pinia store for changes`);
+});
 </script>
 <template>
   <div class="pb-20">
     <NavbarVendor vendorPage="current-order" />
+    <!-- test pinia section -->
+    <section class="w-full h-56 bg-slate-300">
+      <div class="p-20 flex flex-col">
+        <h2 class="flex-wrap">
+          token: <span>{{ token }}</span>
+        </h2>
+        <p>currentUser:{{ currentUser }}</p>
+      </div>
+    </section>
+
     <section
       id="ongoing-order"
       class="bg-red-400 max-h-screen h-screen flex flex-col m-10 shadow-lg rounded-3xl overflow-hidden border-2 border-gray-800"
