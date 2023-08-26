@@ -3,7 +3,65 @@ import { RouterLink } from "vue-router";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
+const router = useRouter();
 const visibility = ref(false);
+
+const username = ref("");
+const email = ref("");
+const password = ref("");
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const registerResponse = await registerVendor();
+  console.log(`registerResponse:`, registerResponse);
+
+  const registerSuccess = registerResponse.message;
+  const registerFail = registerResponse.error;
+
+  if (registerSuccess) {
+    alert(registerSuccess);
+    router.push("/login/vendor");
+  } else if (registerFail) {
+    alert(registerFail);
+
+    password.value = "";
+  }
+};
+
+// function to post API
+async function registerVendor() {
+  console.log(
+    `name:`,
+    username.value,
+    `email:`,
+    email.value,
+    `password:`,
+    password.value
+  );
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      role: "vendor",
+    }),
+  };
+
+  try {
+    const response = await fetch(
+      "http://localhost:3000/auth/register",
+      options
+    );
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
 </script>
 
 <template>
