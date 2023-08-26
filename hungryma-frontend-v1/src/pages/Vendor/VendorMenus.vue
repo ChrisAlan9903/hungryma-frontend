@@ -1,6 +1,7 @@
 <script setup>
 import NavbarVendor from "../../components/NavbarVendor.vue";
 import { RouterLink } from "vue-router";
+import MenuCard from "../../components/Vendor/MenuCard.vue";
 </script>
 <template>
   <NavbarVendor vendorPage="all-menus" />
@@ -25,8 +26,18 @@ import { RouterLink } from "vue-router";
       </RouterLink>
     </div>
     <!-- Page content  -->
-    <div class="flex-1 bg-orange-300 py-10">
-      <!-- table components start-->
+    <div
+      class="flex-1 bg-orange-300 py-10 flex px-10 gap-5 max-w-full flex-wrap overflow-auto"
+    >
+      <!-- TODO: will change to v-for later -->
+      <MenuCard />
+      <MenuCard />
+      <MenuCard />
+      <MenuCard />
+      <MenuCard />
+      <MenuCard />
+      <MenuCard />
+      <MenuCard />
     </div>
   </section>
 </template>
