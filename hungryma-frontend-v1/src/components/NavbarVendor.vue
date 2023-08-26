@@ -3,11 +3,20 @@
 
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
+import { useRouter } from "vue-router";
 // import { defineProps } from "vue";
 
 // const vendorPage = ref("");
 
 const { vendorPage } = defineProps(["vendorPage"]);
+const router = useRouter();
+
+// FEATURE: function for Log Out
+function handleLogout() {
+  localStorage.removeItem("accessToken");
+  alert(`You have logged out !`);
+  router.push("/login/vendor");
+}
 
 // const selectedContent = ref("current-order");
 </script>
