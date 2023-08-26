@@ -1,6 +1,27 @@
 <script setup>
 import { ref } from "vue";
-// REMINDER: temporary data
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+// Set Up: defining the prop passed from parent
+const { foodItem } = defineProps({
+  foodItem: Object,
+});
+
+// Set Up: setting the food categories
+const categoriesArr = [
+  "Western",
+  "Asian",
+  "Fast Foods",
+  "Beverages",
+  "Desserts",
+  "Local Delicacies",
+];
+
+const foodCategory = categoriesArr[foodItem.categoriesId - 1];
+
+console.log(`foodItem:`, foodItem);
 const imageFood = ref("");
 </script>
 
@@ -22,16 +43,15 @@ const imageFood = ref("");
       />
     </div>
     <div id="menu-info" class="flex justify-between mt-5 items-center">
-      <!-- <h3 class="font-semibold text-lg">{{ foodItem.name || "food name" }}</h3>
-      <p class="font-medium text-xs">RM {{ foodItem.price || "99.99" }}</p> -->
-      <h3 class="font-semibold text-lg">{{ "food name" }}</h3>
-      <p class="font-medium text-xs">RM {{ "99.99" }}</p>
+      <h3 class="font-semibold text-lg">{{ foodItem.name }}</h3>
+      <p class="font-medium text-xs">RM {{ foodItem.price }}</p>
     </div>
     <div
       id="card-bottom"
       class="flex gap-1 justify-between px-3 mt-6 items-center"
     >
       <p class="category-badge">{{ foodCategory || "western " }}</p>
+
       <button
         @click="handleDeleteFood"
         class="bg-orange-500 flex gap-2 items-center text-white text-xs h-8 px-2 py-1 rounded-lg cursor-pointer hover:bg-orange-600"

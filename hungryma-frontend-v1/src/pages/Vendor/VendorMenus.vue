@@ -73,14 +73,14 @@ onMounted(async () => {
       class="flex-1 bg-orange-300 py-10 flex px-10 gap-5 max-w-full flex-wrap overflow-auto"
     >
       <!-- TODO: will change to v-for later -->
-      <MenuCard />
-      <MenuCard />
-      <MenuCard />
-      <MenuCard />
-      <MenuCard />
-      <MenuCard />
-      <MenuCard />
-      <MenuCard />
+      <div
+        id="menu-list-wrapper"
+        v-for="item in menuItems"
+        :key="item.id"
+        class="w-fulls flex gap-9 flex-wrap"
+      >
+        <MenuCard :foodItem="item" />
+      </div>
     </div>
   </section>
 </template>
