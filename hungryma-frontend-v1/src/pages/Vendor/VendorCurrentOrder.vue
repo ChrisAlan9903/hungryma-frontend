@@ -2,11 +2,11 @@
 import NavbarVendor from "../../components/NavbarVendor.vue";
 </script>
 <template>
-  <div class="">
+  <div class="pb-20">
     <NavbarVendor vendorPage="current-order" />
     <section
       id="ongoing-order"
-      class="bg-red-400 max-h-screen flex flex-col m-10 shadow-lg rounded-3xl overflow-hidden border-2 border-gray-800"
+      class="bg-red-400 max-h-screen h-screen flex flex-col m-10 shadow-lg rounded-3xl overflow-hidden border-2 border-gray-800"
     >
       <div
         class="w-full h-24 flex justify-start items-center py-5 px-6 bg-gray-200"
@@ -18,10 +18,10 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
       <div class="flex-1 bg-orange-300 py-10">
         <!-- table components start-->
         <div
-          class="shadow-lg rounded-lg overflow-scroll mx-4 md:mx-10 bg-white"
+          class="shadow-lg rounded-lg overflow-auto max-h-[550px] mx-4 md:mx-10 bg-white"
         >
-          <table class="w-full table-fixed overflow-scroll">
-            <thead>
+          <table class="w-full table-fixed overflow-auto">
+            <thead class="sticky top-0">
               <tr class="bg-gray-100">
                 <th
                   class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
@@ -89,6 +89,20 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
                   >
                 </td>
               </tr>
+              <tr>
+                <td class="py-4 px-6 border-b border-gray-200">Jane Doe</td>
+                <td class="py-4 px-6 border-b border-gray-200 truncate">
+                  janedoe@gmail.com
+                </td>
+                <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
+                <td class="py-4 px-6 border-b border-gray-200">
+                  <span
+                    class="bg-red-500 text-white py-1 px-2 rounded-full text-xs"
+                    >Inactive</span
+                  >
+                </td>
+              </tr>
+
               <!-- Add more rows here -->
             </tbody>
           </table>

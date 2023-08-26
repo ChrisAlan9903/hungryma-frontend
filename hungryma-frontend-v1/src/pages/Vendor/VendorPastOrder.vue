@@ -5,7 +5,7 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
   <NavbarVendor vendorPage="past-order" />
   <section
     id="ongoing-order"
-    class="bg-red-400 max-h-screen flex flex-col m-10 shadow-lg rounded-3xl overflow-hidden border-2 border-gray-800"
+    class="bg-red-400 max-h-screen h-screen flex flex-col m-10 shadow-lg rounded-3xl overflow-hidden border-2 border-gray-800"
   >
     <div
       class="w-full h-24 flex justify-start items-center py-5 px-6 bg-gray-200"
@@ -17,9 +17,11 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
 
     <div class="flex-1 bg-orange-300 py-10">
       <!-- table components start-->
-      <div class="shadow-lg rounded-lg overflow-scroll mx-4 md:mx-10 bg-white">
-        <table class="w-full table-fixed overflow-scroll">
-          <thead>
+      <div
+        class="shadow-lg rounded-lg overflow-auto max-h-[550px] mx-4 md:mx-10 bg-white"
+      >
+        <table class="w-full table-fixed overflow-auto">
+          <thead class="sticky top-0">
             <tr class="bg-gray-100">
               <th
                 class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
