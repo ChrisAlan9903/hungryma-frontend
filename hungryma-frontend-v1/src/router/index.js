@@ -9,6 +9,7 @@ import NavbarVendor from "../components/NavbarVendor.vue";
 import VendorCurrentOrder from "../pages/Vendor/VendorCurrentOrder.vue";
 import VendorPastOrder from "../pages/Vendor/VendorPastOrder.vue";
 import VendorMenus from "../pages/Vendor/VendorMenus.vue";
+import VendorAddMenu from "../pages/Vendor/VendorAddMenu.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,6 +76,14 @@ const router = createRouter({
       name: "vendor-menus",
       components: {
         default: VendorMenus,
+        // navigation: NavbarVendor,
+      },
+    },
+    {
+      path: "/vendor/add-menu",
+      name: "vendor-add-menu",
+      components: {
+        default: VendorAddMenu,
         // navigation: NavbarVendor,
       },
     },
