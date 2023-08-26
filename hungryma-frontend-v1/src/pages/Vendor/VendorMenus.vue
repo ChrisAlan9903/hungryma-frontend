@@ -1,7 +1,7 @@
 <script setup>
-import NavbarVendor from "../../components/NavbarVendor.vue";
+import NavbarVendor from "@/components/NavbarVendor.vue";
 import { RouterLink } from "vue-router";
-import MenuCard from "../../components/Vendor/MenuCard.vue";
+import MenuCard from "@/components/Vendor/MenuCard.vue";
 </script>
 <template>
   <NavbarVendor vendorPage="all-menus" />
