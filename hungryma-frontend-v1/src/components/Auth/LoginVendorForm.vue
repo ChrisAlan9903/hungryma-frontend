@@ -19,8 +19,12 @@ const visibility = ref(false);
           Log in and manage your sales seamlessly!
         </p>
 
-        <p class="text-xs text-orange-800">Demo email: vendor-18@gmail.com</p>
-        <p class="text-xs mb-5 text-orange-800">Demo password: 123456</p>
+        <p class="text-xs text-orange-800 font-medium">
+          Demo email: vendor-18@gmail.com
+        </p>
+        <p class="text-xs mb-5 text-orange-800 font-medium">
+          Demo password: 123456
+        </p>
       </div>
       <div class="space-y-4">
         <div
