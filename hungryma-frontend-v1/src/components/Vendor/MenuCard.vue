@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const emit = defineEmits(["delete"]);
 
 // Set Up: defining the prop passed from parent
 const { foodItem } = defineProps({
@@ -23,6 +24,19 @@ const foodCategory = categoriesArr[foodItem.categoriesId - 1];
 
 console.log(`foodItem:`, foodItem);
 const imageFood = ref("");
+
+// Set Up: function to emit delete function when delete button is pressed
+
+const deleteItem = () => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this Menu item?"
+  );
+
+  if (confirmDelete) {
+    console.log("delete action CONFIRMED");
+    emit("delete", foodItem.id);
+  } else return;
+};
 </script>
 
 <template>
@@ -53,7 +67,7 @@ const imageFood = ref("");
       <p class="category-badge">{{ foodCategory || "western " }}</p>
 
       <button
-        @click="handleDeleteFood"
+        @click="deleteItem"
         class="bg-orange-500 flex gap-2 items-center text-white text-xs h-8 px-2 py-1 rounded-lg cursor-pointer hover:bg-orange-600"
       >
         Delete Item <i class="material-icons-sharp"> delete </i>

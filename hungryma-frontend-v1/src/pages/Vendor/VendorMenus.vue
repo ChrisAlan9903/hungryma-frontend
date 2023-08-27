@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import NavbarVendor from "@/components/NavbarVendor.vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import MenuCard from "@/components/Vendor/MenuCard.vue";
 import { useVendorMenusStore } from "../../store/vendorMenus";
 import { useCurrentUserStore } from "../../store/currentUser";
+
+const router = useRouter();
 
 // Set Up: pinia store for currentUser
 const currentUserStore = useCurrentUserStore();
@@ -40,10 +42,53 @@ async function getMenus() {
   }
 }
 
-onMounted(async () => {
+// delete request API for backend
+async function deleteFoodItem(foodId) {
+  console.log(`DELETE foodId:`, foodId);
+  const options = {
+    method: "DELETE",
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/foodItems/${foodId}`,
+      options
+    );
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+// Set Up: function to delete single Menu Item
+async function handleDelete(itemId) {
+  const deleteStatus = await deleteFoodItem(itemId);
+  console.log(`deleteStatus:`, deleteStatus);
+
+  if (deleteStatus == 1) {
+    alert(`Menu deleted !`);
+    // router.push("/vendor/menus");
+    mountPage();
+  } else {
+    alert(`Error in deleting !`);
+  }
+}
+
+// Set Up: mounting current data
+const mountPage = async () => {
   menuItems.value = await getMenus();
   console.log(`menuItems:`, menuItems.value);
   setMenuList(menuItems.value);
+};
+
+onMounted(() => {
+  mountPage();
 });
 </script>
 <template>
@@ -79,7 +124,7 @@ onMounted(async () => {
         :key="item.id"
         class="w-fulls flex gap-9 flex-wrap"
       >
-        <MenuCard :foodItem="item" />
+        <MenuCard :foodItem="item" @delete="handleDelete(item.id)" />
       </div>
     </div>
   </section>
