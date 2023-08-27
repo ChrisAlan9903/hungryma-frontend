@@ -33,14 +33,14 @@ onMounted(async () => {
   <div class="pb-20">
     <NavbarVendor vendorPage="current-order" />
     <!-- test pinia section -->
-    <section class="w-full h-56 bg-slate-300">
+    <!-- <section class="w-full h-56 bg-slate-300">
       <div class="p-20 flex flex-col">
         <h2 class="flex-wrap">
           token: <span>{{ token }}</span>
         </h2>
         <p>currentUser:{{ currentUser }}</p>
       </div>
-    </section>
+    </section> -->
 
     <section
       id="ongoing-order"
