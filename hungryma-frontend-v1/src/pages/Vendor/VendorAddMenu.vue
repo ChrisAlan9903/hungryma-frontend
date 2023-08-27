@@ -1,7 +1,100 @@
 <script setup>
+import { ref } from "vue";
+import { useRouter, RouterLink } from "vue-router";
+import { useCurrentUserStore } from "../../store/currentUser";
 import NavbarVendor from "../../components/NavbarVendor.vue";
-import { RouterLink } from "vue-router";
+
+const router = useRouter();
+const currentUserStore = useCurrentUserStore();
+const { token, currentUser } = currentUserStore;
+
+// Set Up: Capture all input value into variable
+const foodName = ref("");
+const foodDescription = ref("");
+const foodPrice = ref("");
+const foodImage = ref("");
+const foodCategory = ref("");
+const foodVendor = ref(currentUser.id);
+
+// Set Up: handling the food Category from string to Id
+const categoriesArr = [
+  "Western",
+  "Asian",
+  "Fast Foods",
+  "Beverages",
+  "Desserts",
+  "Local Delicacies",
+];
+// getting the category id
+function getCategory() {
+  const compareItem = foodCategory.value;
+  console.log(compareItem);
+
+  // Find the index of the element that matches compareItem
+  const index = categoriesArr.indexOf(compareItem);
+  const categoryId = index + 1;
+  return categoryId;
+}
+
+// Set up: function for create new Menu request API to backend
+async function createFoodItem(name, desc, price, image, category) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify({
+      name: name,
+      description: desc,
+      price: price,
+      vendorId: foodVendor.value,
+      imageLink: image,
+      categoriesId: category,
+    }),
+  };
+
+  try {
+    const response = await fetch("http://localhost:3000/foodItems/", options);
+    const data = await response.json();
+    console.log(`data:`, data);
+    return data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+// Role: Main function to handle add menu action
+async function handleAddMenu(e) {
+  e.preventDefault();
+
+  const categoryId = getCategory();
+
+  const name = foodName.value;
+  const desc = foodDescription.value;
+  const price = foodPrice.value;
+  const image = foodImage.value;
+  const category = categoryId;
+
+  const addMenuStatus = await createFoodItem(
+    name,
+    desc,
+    price,
+    image,
+    category
+  );
+  console.log(`addMenuStatus:`, addMenuStatus);
+
+  if (addMenuStatus.success) {
+    alert(`Menu added successfully !`);
+    router.push("/vendor/menus");
+  } else if (addMenuStatus.error) {
+    alert(`Add menu failed! Error:`, addMenuStatus.error);
+  } else return;
+}
 </script>
+
 <template>
   <NavbarVendor vendorPage="all-menus" />
   <section
