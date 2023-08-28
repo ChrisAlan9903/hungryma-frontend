@@ -6,6 +6,7 @@ import RegisterVendor from "../pages/Auth/RegisterVendor.vue";
 import UserHome from "../pages/User/UserHome.vue";
 import UserCart from "../pages/User/UserCart.vue";
 import UserProfile from "../pages/User/UserProfile.vue";
+import UserUpdate from "../pages/User/UserUpdate.vue";
 import NavbarUser from "../components/NavbarUser.vue";
 import NavbarVendor from "../components/NavbarVendor.vue";
 import VendorCurrentOrder from "../pages/Vendor/VendorCurrentOrder.vue";
@@ -70,6 +71,14 @@ const router = createRouter({
       name: "user-profile",
       components: {
         default: UserProfile,
+        // navigation: NavbarUser,
+      },
+    },
+    {
+      path: "/user/update",
+      name: "user-update",
+      components: {
+        default: UserUpdate,
         // navigation: NavbarUser,
       },
     },

@@ -1,87 +1,65 @@
 <script setup>
 import NavbarVendor from "../../components/NavbarVendor.vue";
 import NavbarUser from "../../components/NavbarUser.vue";
+import { RouterLink } from "vue-router";
 </script>
 <template>
   <NavbarUser userPage="user-profile" />
-  <section
-    id="ongoing-order"
-    class="bg-red-400 max-h-screen h-screen flex flex-col m-10 shadow-lg rounded-3xl overflow-hidden border-2 border-gray-800"
-  >
-    <div
-      class="w-full h-24 flex justify-start items-center py-5 px-6 bg-gray-200"
-    >
-      <h1 class="w-full text-xl font-semibold flex items-center">
-        Past Orders
-      </h1>
-    </div>
+  <section id="ongoing-order" class="m-24 p-3 flex justify-center max-h-screen">
+    <div class="bg-white overflow-hidden shadow-xl rounded-lg border w-1/2">
+      <div class="flex justify-between px-4 py-5 sm:px-6">
+        <div class="">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
+            User Profile
+          </h3>
+          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            This is your user information.
+          </p>
+        </div>
+        <div>
+          <RouterLink
+            :to="{ name: 'user-update' }"
+            :class="[
+              'border border-orange-500 rounded-xl px-3 py-1   transition-all delay-75 flex justify-center items-center',
+              'text-orange-500 text-xs',
 
-    <div class="flex-1 bg-orange-300 py-10">
-      <!-- table components start-->
-      <div
-        class="shadow-lg rounded-lg overflow-auto max-h-[550px] mx-4 md:mx-10 bg-white"
-      >
-        <table class="w-full table-fixed overflow-auto">
-          <thead class="sticky top-0">
-            <tr class="bg-gray-100">
-              <th
-                class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
-              >
-                Order Id
-              </th>
-              <th
-                class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
-              >
-                Items
-              </th>
-              <th
-                class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
-              >
-                Status
-              </th>
-              <th
-                class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
-              >
-                Phone
-              </th>
-            </tr>
-          </thead>
+              'hover:border-orange-500 hover:text-white hover:bg-orange-500',
+            ]"
+            >Update Profile</RouterLink
+          >
+        </div>
+      </div>
+      <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+        <dl class="sm:divide-y sm:divide-gray-200">
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Username</dt>
+            <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ "Chris" }}
+              <!-- {{ currentUserData.username }} -->
+            </dd>
+          </div>
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Email address</dt>
+            <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ "chris@gmail.com" }}
+              <!-- {{ currentUserData.email }} -->
+            </dd>
+          </div>
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Phone number</dt>
 
-          <tbody class="bg-white">
-            <!-------------- Example to loop for : START  ----------------------------->
-            <tr>
-              <td class="py-4 px-6 border-b border-gray-200">John Doe</td>
-              <td class="py-4 px-6 border-b border-gray-200 truncate">
-                <div>Chicken Burger</div>
-                <div>Hawaiian Pizza</div>
-                <div>Lamb Steak</div>
-              </td>
-              <td class="py-4 px-6 border-b border-gray-200">
-                <span
-                  class="bg-green-500 text-white py-1 px-2 rounded-full text-xs"
-                  >Completed</span
-                >
-              </td>
-              <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
-            </tr>
-            <!-------------- Example to loop for : END  ----------------------------->
-            <tr>
-              <td class="py-4 px-6 border-b border-gray-200">Jane Doe</td>
-              <td class="py-4 px-6 border-b border-gray-200 truncate">
-                janedoe@gmail.com
-              </td>
-              <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
-              <td class="py-4 px-6 border-b border-gray-200">
-                <span
-                  class="bg-red-500 text-white py-1 px-2 rounded-full text-xs"
-                  >Inactive</span
-                >
-              </td>
-            </tr>
-
-            <!-- Add more rows here -->
-          </tbody>
-        </table>
+            <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              (123) 456-7890
+            </dd>
+          </div>
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Address</dt>
+            <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ "-" }}
+              <!-- {{ currentUserData.address || "-" }} -->
+            </dd>
+          </div>
+        </dl>
       </div>
     </div>
   </section>
