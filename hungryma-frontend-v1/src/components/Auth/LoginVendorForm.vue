@@ -24,7 +24,7 @@ const handleLogin = async (e) => {
   } else {
     alert(loginSuccess);
     localStorage.setItem("accessToken", accessToken);
-    router.push("/vendor/current-order");
+    router.push({ name: "vendor-current-order" });
   }
 };
 

@@ -4,6 +4,50 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const visibility = ref(false);
+const router = useRouter();
+
+const email = ref("");
+const password = ref("");
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  const loginResponse = await loginUser();
+
+  console.log(`loginResponse:`, loginResponse);
+
+  const loginSuccess = loginResponse.message;
+  const loginFail = loginResponse.error;
+  const accessToken = loginResponse.accessToken;
+
+  if (!accessToken) {
+    alert(loginFail);
+  } else {
+    alert(loginSuccess);
+    localStorage.setItem("accessToken", accessToken);
+    router.push({ name: "user-home" });
+  }
+};
+
+async function loginUser() {
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email.value,
+      password: password.value,
+    }),
+  };
+
+  try {
+    const response = await fetch("http://localhost:3000/auth/login", options);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
 </script>
 <template>
   <div>
