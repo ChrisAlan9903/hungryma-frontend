@@ -4,6 +4,8 @@ import LoginVendor from "../pages/Auth/LoginVendor.vue";
 import RegisterUser from "../pages/Auth/RegisterUser.vue";
 import RegisterVendor from "../pages/Auth/RegisterVendor.vue";
 import UserHome from "../pages/User/UserHome.vue";
+import UserCart from "../pages/User/UserCart.vue";
+import UserProfile from "../pages/User/UserProfile.vue";
 import NavbarUser from "../components/NavbarUser.vue";
 import NavbarVendor from "../components/NavbarVendor.vue";
 import VendorCurrentOrder from "../pages/Vendor/VendorCurrentOrder.vue";
@@ -52,7 +54,23 @@ const router = createRouter({
       name: "user-home",
       components: {
         default: UserHome,
-        navigation: NavbarUser,
+        // navigation: NavbarUser,
+      },
+    },
+    {
+      path: "/user/cart",
+      name: "user-cart",
+      components: {
+        default: UserCart,
+        // navigation: NavbarUser,
+      },
+    },
+    {
+      path: "/user/profile",
+      name: "user-profile",
+      components: {
+        default: UserProfile,
+        // navigation: NavbarUser,
       },
     },
     {

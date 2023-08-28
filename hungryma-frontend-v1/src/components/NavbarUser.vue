@@ -1,38 +1,83 @@
 <script setup>
+// pass current page as prop here to get the cuurent page selected content.
+
+import { ref } from "vue";
 import { RouterLink } from "vue-router";
+import { useRouter } from "vue-router";
+// import { defineProps } from "vue";
+
+// const userPage = ref("");
+
+const { userPage } = defineProps(["userPage"]);
+const router = useRouter();
+
+// FEATURE: function for Log Out
+function handleLogout() {
+  localStorage.removeItem("accessToken");
+  alert(`You have logged out !`);
+  router.push("/login/vendor");
+}
+
+// const selectedContent = ref("current-order");
 </script>
 <template>
-  <nav class="w-full p-8 flex justify-between bg-gray-200 bg-opacity-30">
-    <!-- <RouterLink :to="{ name: 'home' }"> -->
-    <h1 class="logo cursor-pointer">
-      <span class="text-orange-500">H</span>ungryMa<span class="text-orange-500"
-        >?</span
-      >
-    </h1>
-    <!-- </RouterLink> -->
-
-    <div id="select-vendor-view" class="flex gap-12">
-      <RouterLink :to="{ path: '/cart' }">
-        <button
-          class="border border-transparent rounded-xl px-3 py-1 transition-all delay-75 hover:border-orange-500 hover:text-orange-500"
+  <div>
+    <!-- navbar for VendorView -->
+    <nav class="w-full p-8 flex justify-between bg-gray-200 bg-opacity-30">
+      <RouterLink :to="{ name: 'vendor-current-order' }">
+        <h1 class="logo cursor-pointer">
+          <span class="text-orange-500">H</span>ungryMa<span
+            class="text-orange-500"
+            >?</span
+          >
+        </h1>
+      </RouterLink>
+      <!-- Navigation links sections -->
+      <div id="select-vendor-view" class="flex gap-12">
+        <RouterLink
+          :to="{ name: 'user-home' }"
+          :class="[
+            'border border-transparent rounded-xl px-3 py-1   transition-all delay-75 flex justify-center items-center',
+            userPage === `user-home`
+              ? 'bg-orange-500 text-white hover:bg-orange-600'
+              : 'hover:border-orange-500 hover:text-orange-500',
+          ]"
+        >
+          <p class="">Home</p>
+        </RouterLink>
+        <RouterLink
+          :to="{ name: 'user-cart' }"
+          :class="[
+            'border border-transparent rounded-xl px-3 py-1   transition-all delay-75 flex justify-center items-center',
+            userPage === `user-cart`
+              ? 'bg-orange-500 text-white hover:bg-orange-600'
+              : 'hover:border-orange-500 hover:text-orange-500',
+          ]"
         >
           <p class="">Cart</p>
-        </button></RouterLink
-      >
-      <RouterLink :to="{ path: '/profile' }">
-        <button
-          class="border border-transparent rounded-xl px-3 py-1 transition-all delay-75 hover:border-orange-500 hover:text-orange-500"
+        </RouterLink>
+        <RouterLink
+          :to="{ name: 'user-profile' }"
+          :class="[
+            'border border-transparent rounded-xl px-3 py-1   transition-all delay-75 flex justify-center items-center',
+            userPage === `user-profile`
+              ? 'bg-orange-500 text-white hover:bg-orange-600'
+              : 'hover:border-orange-500 hover:text-orange-500',
+          ]"
         >
           <p class="">Profile</p>
-        </button></RouterLink
-      >
+        </RouterLink>
 
-      <button
-        @click="handleLogout"
-        class="bg-orange-800 text-white border border-transparent rounded-xl px-3 py-1 transition-all delay-75 hover:bg-orange-500"
-      >
-        <p class="">Log Out</p>
-      </button>
-    </div>
-  </nav>
+        <button
+          @click="handleLogout"
+          class="flex items-center gap-1 text-xs bg-orange-800 text-white border border-transparent rounded-xl px-3 py-1 transition-all delay-75 hover:bg-orange-500"
+        >
+          <i class="material-icons text-white"> logout </i>
+
+          <p class="">Log Out</p>
+        </button>
+      </div>
+    </nav>
+    <!-- end of navbar for VendorView -->
+  </div>
 </template>
