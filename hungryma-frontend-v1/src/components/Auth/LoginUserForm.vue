@@ -17,10 +17,18 @@ const visibility = ref(false);
             Log In
           </h1>
           <p
-            class="w-80 text-center text-sm mb-8 font-semibold text-gray-700 tracking-wide cursor-pointer"
+            class="w-80 text-center text-sm mb-4 font-semibold text-gray-700 tracking-wide cursor-pointer"
           >
             Log in and enjoy all the selection of cuisine available!
           </p>
+          <!-- demo account info -->
+          <p class="text-xs text-purple-800 font-medium">
+            Demo email: user-19@gmail.com
+          </p>
+          <p class="text-xs mb-5 text-purple-800 font-medium">
+            Demo password: 123456
+          </p>
+          <!-- end of demo account info -->
         </div>
         <div class="space-y-4">
           <div
