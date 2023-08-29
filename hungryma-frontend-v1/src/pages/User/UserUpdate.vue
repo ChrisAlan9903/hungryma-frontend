@@ -1,5 +1,64 @@
 <script setup>
 import NavbarUser from "../../components/NavbarUser.vue";
+import { ref } from "vue";
+import { useRouter, RouterLink } from "vue-router";
+import { useCurrentUserStore } from "../../store/currentUser";
+
+const router = useRouter();
+
+const currentUserStore = useCurrentUserStore();
+const { token, setToken, currentUser, setCurrentUser, getCurrentUser } =
+  currentUserStore;
+
+// Set Up: creating variables to hold input state
+const nameInput = ref(currentUser.username);
+const emailInput = ref(currentUser.email);
+const phoneNumInput = ref(currentUser.phoneNumber);
+const addressInput = ref(currentUser.address);
+
+// Set Up: Update user request function
+async function updateUser(id) {
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify({
+      username: nameInput.value,
+      email: emailInput.value,
+      phoneNumber: phoneNumInput.value,
+      address: addressInput.value,
+    }),
+  };
+
+  try {
+    console.log(`currentid: `, id);
+    const response = await fetch(`http://localhost:3000/users/${id}`, options);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+// Set Up: function to handle Update user
+async function handleUpdateUser(e) {
+  e.preventDefault();
+  const updateStatus = await updateUser(currentUser.id);
+  console.log(`updateStatus: `, updateStatus);
+
+  if (updateStatus.error) {
+    alert(`Error in updating:`, updateStatus.error);
+  } else if (updateStatus.length > 0) {
+    alert(`Update successful !`);
+    console.log(`updateStatus messages: `, updateStatus);
+    await getCurrentUser();
+    router.push({ name: "user-profile" });
+  }
+}
 </script>
 <template>
   <NavbarUser userPage="user-profile" />
