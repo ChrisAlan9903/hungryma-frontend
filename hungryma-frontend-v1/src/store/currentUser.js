@@ -17,6 +17,10 @@ export const useCurrentUserStore = defineStore("currentUser", {
       console.log(`token set in pinia already:`, this.token);
     },
 
+    setCurrentUser(userInfo) {
+      this.currentUser = userInfo;
+    },
+
     async getCurrentUser() {
       console.log(`this.token value:`, this.token);
       const options = {

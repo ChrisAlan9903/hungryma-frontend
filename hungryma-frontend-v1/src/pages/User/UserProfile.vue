@@ -3,15 +3,54 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
 import NavbarUser from "../../components/NavbarUser.vue";
 import { RouterLink, useRouter } from "vue-router";
 import { useCurrentUserStore } from "../../store/currentUser";
+import { ref, onMounted } from "vue";
 
 const router = useRouter();
 
 // Set Up: pinia store for currentUser
 const currentUserStore = useCurrentUserStore();
-const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
+const { token, currentUser, setToken, setCurrentUser, getCurrentUser } =
+  currentUserStore;
 
 // Set up: get token from localStorage
 const accessToken = localStorage.getItem("accessToken");
+
+// Set Up: variable(s) to hold user information after fetch req
+const currentUserInfo = ref();
+
+// Set Up: function to get user info from DB
+async function getUserData() {
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: accessToken,
+    },
+  };
+
+  try {
+    const response = await fetch(
+      "http://localhost:3000/users/user/current",
+      options
+    );
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+onMounted(async () => {
+  setToken(accessToken);
+  try {
+    currentUserInfo.value = await getUserData();
+    console.log(currentUserInfo.value);
+    setCurrentUser(currentUserInfo.value);
+  } catch (error) {
+    console.log({ error: error });
+  }
+});
 </script>
 <template>
   <NavbarUser userPage="user-profile" />
@@ -44,14 +83,17 @@ const accessToken = localStorage.getItem("accessToken");
           <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Username</dt>
             <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ "Chris" }}
+              <!-- {{ "Chris" }} -->
+              {{ currentUser.username }}
               <!-- {{ currentUserData.username }} -->
             </dd>
           </div>
           <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Email address</dt>
             <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ "chris@gmail.com" }}
+              <!-- {{ "chris@gmail.com" }} -->
+              {{ currentUser.email }}
+
               <!-- {{ currentUserData.email }} -->
             </dd>
           </div>
@@ -59,13 +101,16 @@ const accessToken = localStorage.getItem("accessToken");
             <dt class="text-sm font-medium text-gray-500">Phone number</dt>
 
             <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              (123) 456-7890
+              <!-- (123) 456-7890 -->
+              {{ currentUser.phoneNumber || "-" }}
             </dd>
           </div>
           <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Address</dt>
             <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ "-" }}
+              <!-- {{ "-" }} -->
+              {{ currentUser.address }}
+
               <!-- {{ currentUserData.address || "-" }} -->
             </dd>
           </div>
