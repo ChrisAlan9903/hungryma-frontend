@@ -3,7 +3,7 @@
 import NavbarUser from "../../components/NavbarUser.vue";
 import { RouterLink, useRouter } from "vue-router";
 import { useCurrentUserStore } from "../../store/currentUser";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, onBeforeMount } from "vue";
 
 const router = useRouter();
 
@@ -43,22 +43,15 @@ async function getUserData(token) {
   }
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   setToken(accessToken);
   console.log(`token in pinia after set:`, token);
 
-  //   watch(tokenRef, async (newToken) => {
-  //     try {
-  //       console.log(`new Token: `, newToken);
-  //       currentUserInfo.value = await getUserData(newToken);
-  //       console.log(`currentUserInfo after fetching:`, currentUserInfo.value);
-  //       setCurrentUser(currentUserInfo.value);
-  //     } catch (error) {
-  //       console.log({ error: error });
-  //     }
-  //   });
   try {
-    currentUserInfo.value = await getUserData(token);
+    console.log(`CP 1`);
+    // currentUserInfo.value = await getUserData(token);
+    currentUserInfo.value = await getCurrentUser();
+    console.log(`CP 2`);
     console.log(`currentUserInfo after fetching:`, currentUserInfo.value);
     setCurrentUser(currentUserInfo.value);
   } catch (error) {
@@ -70,7 +63,7 @@ onMounted(async () => {
   <NavbarUser userPage="user-profile" />
   <section id="ongoing-order" class="flex justify-center max-h-screen p-3 m-24">
     <div
-      class="w-1/2 overflow-hidden bg-white border border-2 border-black rounded-lg shadow-xl"
+      class="w-1/2 overflow-hidden bg-white border-2 border-black rounded-lg shadow-xl"
     >
       <div class="flex justify-between px-4 py-5 sm:px-6">
         <div class="">
@@ -100,7 +93,7 @@ onMounted(async () => {
             <dt class="text-sm font-medium text-gray-500">Username</dt>
             <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               <!-- {{ "Chris" }} -->
-              {{ currentUser.username }}
+              {{ currentUserInfo.username }}
               <!-- {{ currentUserData.username }} -->
             </dd>
           </div>
@@ -108,7 +101,7 @@ onMounted(async () => {
             <dt class="text-sm font-medium text-gray-500">Email address</dt>
             <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               <!-- {{ "chris@gmail.com" }} -->
-              {{ currentUser.email }}
+              {{ currentUserInfo.email }}
 
               <!-- {{ currentUserData.email }} -->
             </dd>
@@ -118,14 +111,14 @@ onMounted(async () => {
 
             <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               <!-- (123) 456-7890 -->
-              {{ currentUser.phoneNumber || "-" }}
+              {{ currentUserInfo.phoneNumber || "-" }}
             </dd>
           </div>
           <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Address</dt>
             <dd class="mt-1 ml-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               <!-- {{ "-" }} -->
-              {{ currentUser.address }}
+              {{ currentUserInfo.address }}
 
               <!-- {{ currentUserData.address || "-" }} -->
             </dd>

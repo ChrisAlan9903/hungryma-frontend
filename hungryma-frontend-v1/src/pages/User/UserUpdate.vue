@@ -51,7 +51,9 @@ async function handleUpdateUser(e) {
   console.log(`updateStatus: `, updateStatus);
 
   if (updateStatus.error) {
-    alert(`Error in updating:`, updateStatus.error);
+    const message = updateStatus.error.errors[0].message;
+    console.log(`error message:`, message);
+    alert(`Error in updating: ${message}`);
   } else if (updateStatus.length > 0) {
     alert(`Update successful !`);
     console.log(`updateStatus messages: `, updateStatus);

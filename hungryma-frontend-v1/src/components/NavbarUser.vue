@@ -24,7 +24,7 @@ function handleLogout() {
   <div>
     <!-- navbar for VendorView -->
     <nav class="flex justify-between w-full p-8 bg-gray-200 bg-opacity-30">
-      <RouterLink :to="{ name: 'vendor-current-order' }">
+      <RouterLink :to="{ name: 'user-home' }">
         <h1 class="cursor-pointer logo">
           <span class="text-orange-500">H</span>ungryMa<span
             class="text-orange-500"
