@@ -28,9 +28,10 @@ const handleLogin = async (e) => {
   } else {
     alert(loginSuccess);
     localStorage.setItem("accessToken", accessToken);
+
     // setting currentUser in Pinia
     setToken(accessToken);
-    getCurrentUser();
+    await getCurrentUser();
 
     router.push({ name: "vendor-current-order" });
   }

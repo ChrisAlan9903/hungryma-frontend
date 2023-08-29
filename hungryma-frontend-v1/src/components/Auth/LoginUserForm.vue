@@ -29,8 +29,10 @@ const handleLogin = async (e) => {
     alert(loginSuccess);
     localStorage.setItem("accessToken", accessToken);
     setToken(accessToken);
+
+    // setting currentUser in Pinia
     await getCurrentUser();
-    console.log(`accessToken after logni:`, accessToken);
+    console.log(`accessToken after login:`, accessToken);
     console.log(`pinia token after login:`, token);
     router.push({ name: "user-home" });
   }
