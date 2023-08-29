@@ -2,12 +2,16 @@
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useCurrentUserStore } from "../../store/currentUser";
 
 const visibility = ref(false);
 const router = useRouter();
 
 const email = ref("");
 const password = ref("");
+
+const currentUserStore = useCurrentUserStore();
+const { token, setToken, getCurrentUser } = currentUserStore;
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -24,6 +28,10 @@ const handleLogin = async (e) => {
   } else {
     alert(loginSuccess);
     localStorage.setItem("accessToken", accessToken);
+    setToken(accessToken);
+    await getCurrentUser();
+    console.log(`accessToken after logni:`, accessToken);
+    console.log(`pinia token after login:`, token);
     router.push({ name: "user-home" });
   }
 };
@@ -52,50 +60,50 @@ async function loginUser() {
 <template>
   <div>
     <!-- component -->
-    <form @submit="handleLogin" class="flex justify-center items-center">
+    <form @submit="handleLogin" class="flex items-center justify-center">
       <div
-        class="py-12 px-12 bg-white bg-opacity-90 rounded-2xl shadow-xl z-20"
+        class="z-20 px-12 py-12 bg-white shadow-xl bg-opacity-90 rounded-2xl"
       >
         <div>
-          <h1 class="text-3xl font-bold text-center mb-4 cursor-pointer">
+          <h1 class="mb-4 text-3xl font-bold text-center cursor-pointer">
             Log In
           </h1>
           <p
-            class="w-80 text-center text-sm mb-4 font-semibold text-gray-700 tracking-wide cursor-pointer"
+            class="mb-4 text-sm font-semibold tracking-wide text-center text-gray-700 cursor-pointer w-80"
           >
             Log in and enjoy all the selection of cuisine available!
           </p>
           <!-- demo account info -->
-          <p class="text-xs text-purple-800 font-medium">
+          <p class="text-xs font-medium text-purple-800">
             Demo email: user-19@gmail.com
           </p>
-          <p class="text-xs mb-5 text-purple-800 font-medium">
+          <p class="mb-5 text-xs font-medium text-purple-800">
             Demo password: 123456
           </p>
           <!-- end of demo account info -->
         </div>
         <div class="space-y-4">
           <div
-            class="flex gap-1 items-center text-sm py-3 px-4 rounded-lg w-full border outline-none"
+            class="flex items-center w-full gap-1 px-4 py-3 text-sm border rounded-lg outline-none"
           >
-            <i class="material-icons text-orange-400 mr-4"> email </i>
+            <i class="mr-4 text-orange-400 material-icons"> email </i>
             <input
               v-model="email"
               type="email"
               placeholder="Email"
-              class="outline-none bg-transparent"
+              class="bg-transparent outline-none"
               required
             />
           </div>
           <div
-            class="flex gap-1 items-center text-sm py-3 px-4 rounded-lg w-full border outline-none"
+            class="flex items-center w-full gap-1 px-4 py-3 text-sm border rounded-lg outline-none"
           >
-            <i class="material-icons text-orange-400 mr-4"> lock </i>
+            <i class="mr-4 text-orange-400 material-icons"> lock </i>
             <input
               v-model="password"
               :type="visibility ? 'text' : 'password'"
               placeholder="Password"
-              class="outline-none bg-transparent mr-auto"
+              class="mr-auto bg-transparent outline-none"
               required
             />
             <div
@@ -105,18 +113,18 @@ async function loginUser() {
             >
               <i
                 v-if="visibility === false"
-                class="material-icons text-orange-400"
+                class="text-orange-400 material-icons"
               >
                 visibility_off
               </i>
-              <i v-else class="material-icons text-orange-600"> visibility </i>
+              <i v-else class="text-orange-600 material-icons"> visibility </i>
             </div>
           </div>
         </div>
-        <div class="text-center mt-6 transition-all delay-300">
+        <div class="mt-6 text-center transition-all delay-300">
           <button
             type="submit"
-            class="py-3 w-64 text-xl text-white bg-orange-400 rounded-2xl transition-all delay-75 hover:bg-orange-600"
+            class="w-64 py-3 text-xl text-white transition-all delay-75 bg-orange-400 rounded-2xl hover:bg-orange-600"
           >
             Log In
           </button>
@@ -124,7 +132,7 @@ async function loginUser() {
             Don't Have An Account?
             <RouterLink
               :to="{ name: 'register-user' }"
-              class="text-orange-700 hover:underline duration-150 ease-linear"
+              class="text-orange-700 duration-150 ease-linear hover:underline"
               >Sign Up here</RouterLink
             >
           </p>

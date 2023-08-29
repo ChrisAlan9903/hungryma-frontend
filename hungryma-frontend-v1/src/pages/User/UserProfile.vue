@@ -3,7 +3,7 @@ import NavbarVendor from "../../components/NavbarVendor.vue";
 import NavbarUser from "../../components/NavbarUser.vue";
 import { RouterLink, useRouter } from "vue-router";
 import { useCurrentUserStore } from "../../store/currentUser";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 
 const router = useRouter();
 
@@ -17,13 +17,15 @@ const accessToken = localStorage.getItem("accessToken");
 
 // Set Up: variable(s) to hold user information after fetch req
 const currentUserInfo = ref();
+console.log(`currentUserInfo: `, currentUserInfo.value);
 
 // Set Up: function to get user info from DB
-async function getUserData() {
+async function getUserData(token) {
+  console.log(`token for fetching:`, token);
   const options = {
     method: "GET",
     headers: {
-      Authorization: accessToken,
+      Authorization: token,
     },
   };
 
@@ -43,9 +45,21 @@ async function getUserData() {
 
 onMounted(async () => {
   setToken(accessToken);
+  console.log(`token in pinia after set:`, token);
+
+  //   watch(tokenRef, async (newToken) => {
+  //     try {
+  //       console.log(`new Token: `, newToken);
+  //       currentUserInfo.value = await getUserData(newToken);
+  //       console.log(`currentUserInfo after fetching:`, currentUserInfo.value);
+  //       setCurrentUser(currentUserInfo.value);
+  //     } catch (error) {
+  //       console.log({ error: error });
+  //     }
+  //   });
   try {
-    currentUserInfo.value = await getUserData();
-    console.log(currentUserInfo.value);
+    currentUserInfo.value = await getUserData(token);
+    console.log(`currentUserInfo after fetching:`, currentUserInfo.value);
     setCurrentUser(currentUserInfo.value);
   } catch (error) {
     console.log({ error: error });
@@ -117,5 +131,8 @@ onMounted(async () => {
         </dl>
       </div>
     </div>
+    <!-- <div v-else>
+      <p>Loading user Info..</p>
+    </div> -->
   </section>
 </template>
