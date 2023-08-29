@@ -1,7 +1,17 @@
 <script setup>
 import NavbarVendor from "../../components/NavbarVendor.vue";
 import NavbarUser from "../../components/NavbarUser.vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+import { useCurrentUserStore } from "../../store/currentUser";
+
+const router = useRouter();
+
+// Set Up: pinia store for currentUser
+const currentUserStore = useCurrentUserStore();
+const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
+
+// Set up: get token from localStorage
+const accessToken = localStorage.getItem("accessToken");
 </script>
 <template>
   <NavbarUser userPage="user-profile" />
