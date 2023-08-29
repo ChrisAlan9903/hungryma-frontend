@@ -62,20 +62,32 @@ async function handleUpdateUser(e) {
 </script>
 <template>
   <NavbarUser userPage="user-profile" />
-  <section class="w-full mt-20 bg-red-300">
+  <section class="w-full mt-10">
     <form
       @submit="handleUpdateUser"
       class="flex items-center justify-center max-w-full"
     >
       <div
-        class="z-20 w-full max-w-3xl px-12 py-12 bg-white shadow-xl bg-opacity-90 rounded-2xl"
+        class="z-20 w-full max-w-3xl px-12 py-12 bg-white border-2 border-black shadow-xl bg-opacity-90 rounded-2xl"
       >
-        <div>
+        <div class="flex justify-between">
           <p
             class="mb-8 text-sm font-semibold tracking-wide text-left text-gray-700 cursor-pointer w-96"
           >
             Fill in the information below to update your profile.
           </p>
+          <div>
+            <RouterLink
+              :to="{ name: 'user-profile' }"
+              :class="[
+                'border border-orange-500 rounded-xl px-3 py-1   transition-all delay-75 flex justify-center items-center',
+                'text-orange-500 text-xs',
+
+                'hover:border-orange-500 hover:text-white hover:bg-orange-500',
+              ]"
+              >Back to profile ></RouterLink
+            >
+          </div>
         </div>
         <div class="space-y-4">
           <!-- username -->

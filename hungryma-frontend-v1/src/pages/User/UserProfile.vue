@@ -1,5 +1,5 @@
 <script setup>
-import NavbarVendor from "../../components/NavbarVendor.vue";
+// import NavbarVendor from "../../components/NavbarVendor.vue";
 import NavbarUser from "../../components/NavbarUser.vue";
 import { RouterLink, useRouter } from "vue-router";
 import { useCurrentUserStore } from "../../store/currentUser";
@@ -69,7 +69,9 @@ onMounted(async () => {
 <template>
   <NavbarUser userPage="user-profile" />
   <section id="ongoing-order" class="flex justify-center max-h-screen p-3 m-24">
-    <div class="w-1/2 overflow-hidden bg-white border rounded-lg shadow-xl">
+    <div
+      class="w-1/2 overflow-hidden bg-white border border-2 border-black rounded-lg shadow-xl"
+    >
       <div class="flex justify-between px-4 py-5 sm:px-6">
         <div class="">
           <h3 class="text-lg font-medium leading-6 text-gray-900">
