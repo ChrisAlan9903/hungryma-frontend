@@ -5,14 +5,14 @@ import { RouterLink } from "vue-router";
 </script>
 <template>
   <NavbarUser userPage="user-profile" />
-  <section id="ongoing-order" class="m-24 p-3 flex justify-center max-h-screen">
-    <div class="bg-white overflow-hidden shadow-xl rounded-lg border w-1/2">
+  <section id="ongoing-order" class="flex justify-center max-h-screen p-3 m-24">
+    <div class="w-1/2 overflow-hidden bg-white border rounded-lg shadow-xl">
       <div class="flex justify-between px-4 py-5 sm:px-6">
         <div class="">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">
             User Profile
           </h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+          <p class="max-w-2xl mt-1 text-sm text-gray-500">
             This is your user information.
           </p>
         </div>
@@ -29,7 +29,7 @@ import { RouterLink } from "vue-router";
           >
         </div>
       </div>
-      <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+      <div class="px-4 py-5 border-t border-gray-200 sm:p-0">
         <dl class="sm:divide-y sm:divide-gray-200">
           <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Username</dt>
