@@ -7,6 +7,7 @@ import UserHome from "../pages/User/UserHome.vue";
 import UserCart from "../pages/User/UserCart.vue";
 import UserProfile from "../pages/User/UserProfile.vue";
 import UserUpdate from "../pages/User/UserUpdate.vue";
+import UserAllMenu from "../pages/User/UserAllMenu.vue";
 import NavbarUser from "../components/NavbarUser.vue";
 import NavbarVendor from "../components/NavbarVendor.vue";
 import VendorCurrentOrder from "../pages/Vendor/VendorCurrentOrder.vue";
@@ -30,8 +31,13 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import("../views/AboutView.vue"),
     // },
+    // {
+    //   path: "/login/user",
+    //   name: "login-user",
+    //   component: LoginUser,
+    // },
     {
-      path: "/login/user",
+      path: "/",
       name: "login-user",
       component: LoginUser,
     },
@@ -55,6 +61,14 @@ const router = createRouter({
       name: "user-home",
       components: {
         default: UserHome,
+        // navigation: NavbarUser,
+      },
+    },
+    {
+      path: "/user/all-menu",
+      name: "user-all-menu",
+      components: {
+        default: UserAllMenu,
         // navigation: NavbarUser,
       },
     },
