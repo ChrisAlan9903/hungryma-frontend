@@ -1,4 +1,23 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const { cartItem } = defineProps(["cartItem"]);
+console.log(`cartItem:`, cartItem);
+
+// Set Up: handling item quantity
+const quantity = ref(1);
+
+function increaseQuantity() {
+  quantity.value++;
+  console.log(`add quantity`);
+}
+function decreaseQuantity() {
+  if (quantity.value > 1) {
+    quantity.value--;
+    console.log(`reduce quantity`);
+  }
+}
+</script>
 <template>
   <div
     id="item-1"
@@ -6,23 +25,19 @@
   >
     <div class="flex justify-between w-2/5 h-full">
       <img src="../../assets/chef-1.jpg" alt="" class="object-cover w-1/2" />
-      <div class="flex items-center h-full ml-2 overflow-hidden">
-        <h3
-          class="cursor-pointer line-clamp-2"
-          title="Cheese Potato with Tomato Puree Lorem ipsum dolor sit amet.
-            "
-        >
-          Grilled Chicken with Tomato Puree Lorem ipsum dolor sit amet.
+      <div class="flex items-center w-1/2 h-full pl-3 overflow-hidden">
+        <h3 class="cursor-pointer line-clamp-2" :title="cartItem.name">
+          {{ cartItem.name }}
         </h3>
       </div>
     </div>
     <div class="flex items-center justify-center w-1/5 gap-5">
-      <button class="font-semibold">-</button>
-      <p class="px-4 py-2 border border-slate-400">2</p>
-      <button class="font-semibold">+</button>
+      <button @click="decreaseQuantity" class="font-semibold">-</button>
+      <p class="px-4 py-2 border border-slate-400">{{ quantity }}</p>
+      <button @click="increaseQuantity" class="font-semibold">+</button>
     </div>
     <div class="flex items-center justify-center w-1/5">
-      <p>RM 20</p>
+      <p>RM {{ cartItem.price }}</p>
     </div>
     <div class="flex items-center justify-center w-1/5">
       <p>RM 20</p>

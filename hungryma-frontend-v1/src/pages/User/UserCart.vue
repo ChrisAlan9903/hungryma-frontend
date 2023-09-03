@@ -1,12 +1,19 @@
 <script setup>
 import { ref } from "vue";
 import { useCurrentUserStore } from "../../store/currentUser.js";
+import { useUserCartStore } from "../../store/userCart";
 import { useRouter } from "vue-router";
 import NavbarUser from "../../components/NavbarUser.vue";
 import CartItem from "../../components/User/CartItem.vue";
 
 // TO EDIT: temporary variable to set how many times to render child components
 const renderCount = 5;
+
+// SET UP: pinia store for added cartItems
+
+const userCartStore = useUserCartStore();
+const { cartItems } = userCartStore;
+const cartOrders = ref(cartItems);
 </script>
 
 <template>
@@ -22,7 +29,7 @@ const renderCount = 5;
           class="flex items-center justify-between pt-6 pb-3 bg-pink-200 border-b-2 border-slate-400"
         >
           <h1 class="text-4xl font-bold">Shopping Cart</h1>
-          <h3 class="text-xl font-bold">{{ renderCount }} Items</h3>
+          <h3 class="text-xl font-bold">{{ cartOrders.length }} Items</h3>
         </div>
         <!-- item list container -->
         <div class="flex-1 w-full bg-purple-100">
@@ -39,7 +46,11 @@ const renderCount = 5;
             class="w-full h-full overflow-auto xl:max-h-[420px] 2xl:max-h-[420px] mt-6"
           >
             <!-- item list -->
-            <CartItem v-for="index in renderCount" :key="index" />
+            <CartItem
+              v-for="order in cartOrders"
+              :key="order"
+              :cartItem="order"
+            />
           </div>
         </div>
       </div>
@@ -61,7 +72,7 @@ const renderCount = 5;
           <div class="px-8 py-5 h-1/2">
             <div id="subtotal-item-1" class="flex items-center justify-between">
               <h5 class="text-base font-bold">Total Items</h5>
-              <h5 class="font-medium">{{ renderCount }}</h5>
+              <h5 class="font-medium">{{ cartOrders.length }}</h5>
             </div>
           </div>
           <!-- subtotal section -->
