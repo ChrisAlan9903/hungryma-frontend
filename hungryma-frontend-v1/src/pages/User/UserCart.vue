@@ -21,8 +21,8 @@ const renderCount = 5;
         <div
           class="flex items-center justify-between pt-6 pb-3 bg-pink-200 border-b-2 border-slate-400"
         >
-          <h1 class="text-4xl font-bold">Title</h1>
-          <h3 class="text-xl font-bold">3 Items</h3>
+          <h1 class="text-4xl font-bold">Shopping Cart</h1>
+          <h3 class="text-xl font-bold">{{ renderCount }} Items</h3>
         </div>
         <!-- item list container -->
         <div class="flex-1 w-full bg-purple-100">
@@ -50,10 +50,66 @@ const renderCount = 5;
       <!-- inner container -->
       <div class="w-full h-full bg-green-200">
         <!-- title for each part -->
-        <div class="">
-          <h2 class="text-center">Title</h2>
+        <div
+          class="flex items-center justify-between pt-6 pb-3 bg-pink-200 border-b-2 border-slate-400"
+        >
+          <h2 class="text-3xl font-bold">Order Summary</h2>
         </div>
-        <div class="w-full bg-purple-500"></div>
+        <!-- total amount wrapper -->
+        <div class="w-full bg-purple-100">
+          <!-- total item section -->
+          <div class="px-8 py-5 h-1/2">
+            <div id="subtotal-item-1" class="flex items-center justify-between">
+              <h5 class="text-base font-bold">Total Items</h5>
+              <h5 class="font-medium">{{ renderCount }}</h5>
+            </div>
+          </div>
+          <!-- subtotal section -->
+          <div
+            id="subtotal"
+            class="px-8 pt-5 border-b-2 border-gray-200 border-dashed h-1/2"
+          >
+            <div
+              id="subtotal-item-1"
+              class="flex items-center justify-between mb-10"
+            >
+              <h5 class="text-gray-500">Subtotal</h5>
+              <h5 class="font-medium">RM 20</h5>
+            </div>
+            <div
+              id="subtotal-item-2"
+              class="flex items-center justify-between mb-10"
+            >
+              <h5 class="text-gray-500">Sales Discounts</h5>
+              <h5 class="font-medium">- RM 20</h5>
+            </div>
+            <div
+              id="subtotal-item-3"
+              class="flex items-center justify-between mb-10"
+            >
+              <h5 class="text-gray-500">Total Sales tax</h5>
+              <h5 class="font-medium">RM 20</h5>
+            </div>
+          </div>
+          <!-- Total section -->
+          <div id="total" class="flex flex-col items-center h-1/2">
+            <div
+              id="total-item"
+              class="flex justify-between w-full px-8 pt-3 my-3"
+            >
+              <h4 class="text-xl font-semibold">Total</h4>
+              <h4 class="text-xl font-semibold">RM 60</h4>
+            </div>
+            <div id="checkout" class="w-full px-8 pt-3">
+              <button
+                id="checkout-btn"
+                class="w-full h-12 text-white transition-all delay-75 bg-orange-500 rounded-lg hover:bg-orange-600"
+              >
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
