@@ -78,16 +78,15 @@ function handleLogout() {
         >
           <p class="">Profile</p>
         </RouterLink>
-
-        <button
-          @click="handleLogout"
-          class="flex items-center gap-1 px-3 py-1 text-xs text-white transition-all delay-75 bg-orange-800 border border-transparent rounded-xl hover:bg-orange-500"
-        >
-          <i class="text-white material-icons"> logout </i>
-
-          <p class="">Log Out</p>
-        </button>
       </div>
+      <button
+        @click="handleLogout"
+        class="flex items-center gap-1 px-3 py-1 text-xs text-white transition-all delay-75 bg-orange-800 border border-transparent rounded-xl hover:bg-orange-500"
+      >
+        <i class="text-white material-icons"> logout </i>
+
+        <p class="">Log Out</p>
+      </button>
     </nav>
     <!-- end of navbar for VendorView -->
   </div>
