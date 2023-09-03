@@ -21,9 +21,9 @@ function handleLogout() {
 // const selectedContent = ref("current-order");
 </script>
 <template>
-  <div>
+  <div class="sticky top-0">
     <!-- navbar for VendorView -->
-    <nav class="flex justify-between w-full p-8 bg-gray-200 bg-opacity-30">
+    <nav class="flex justify-between w-full p-8 bg-opacity-100 bg-gray-50">
       <RouterLink :to="{ name: 'user-home' }">
         <h1 class="cursor-pointer logo">
           <span class="text-orange-500">H</span>ungryMa<span

@@ -10,7 +10,7 @@ const renderCount = 5;
 </script>
 
 <template>
-  <NavbarUser userPage="user-cart" />
+  <NavbarUser userPage="user-cart " />
   <!-- Cart Item Sections -->
   <section class="flex w-full h-screen max-h-screen bg-red-100">
     <!-- Added item list  -->
