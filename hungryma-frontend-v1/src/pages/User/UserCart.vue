@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useCurrentUserStore } from "../../store/currentUser.js";
 import { useUserCartStore } from "../../store/userCart";
 import { useRouter } from "vue-router";
@@ -13,7 +13,30 @@ const renderCount = 5;
 
 const userCartStore = useUserCartStore();
 const { cartItems } = userCartStore;
-const cartOrders = ref(cartItems);
+// const cartOrders = ref(cartItems);
+
+// const formattedCartItems = computed(() => {
+//   return cartItems.map((item) => {
+//     item.price = item.price.toFixed(2);
+//     return item;
+//   });
+// });
+
+// Define a function to format the price
+const formatPrice = (price) => {
+  if (typeof price === "number") {
+    return price.toFixed(2);
+  } else {
+    return price; // Return the original value if it's not a number
+  }
+};
+
+const formattedCartItems = computed(() => {
+  return cartItems.map((item) => {
+    item.price = formatPrice(item.price);
+    return item;
+  });
+});
 </script>
 
 <template>
@@ -29,7 +52,9 @@ const cartOrders = ref(cartItems);
           class="flex items-center justify-between pt-6 pb-3 bg-pink-200 border-b-2 border-slate-400"
         >
           <h1 class="text-4xl font-bold">Shopping Cart</h1>
-          <h3 class="text-xl font-bold">{{ cartOrders.length }} Items</h3>
+          <h3 class="text-xl font-bold">
+            {{ formattedCartItems.length }} Items
+          </h3>
         </div>
         <!-- item list container -->
         <div class="flex-1 w-full bg-purple-100">
@@ -47,7 +72,7 @@ const cartOrders = ref(cartItems);
           >
             <!-- item list -->
             <CartItem
-              v-for="order in cartOrders"
+              v-for="order in formattedCartItems"
               :key="order"
               :cartItem="order"
             />
@@ -72,7 +97,7 @@ const cartOrders = ref(cartItems);
           <div class="px-8 py-5 h-1/2">
             <div id="subtotal-item-1" class="flex items-center justify-between">
               <h5 class="text-base font-bold">Total Items</h5>
-              <h5 class="font-medium">{{ cartOrders.length }}</h5>
+              <h5 class="font-medium">{{ formattedCartItems.length }}</h5>
             </div>
           </div>
           <!-- subtotal section -->
