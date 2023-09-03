@@ -1,11 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const { cartItem } = defineProps(["cartItem"]);
 console.log(`cartItem:`, cartItem);
 
 // Set Up: handling item quantity
 const quantity = ref(1);
+
+const totalPrice = computed(() => {
+  // This function will be re-evaluated whenever originalValue changes
+  return quantity.value * cartItem.price;
+});
 
 function increaseQuantity() {
   quantity.value++;
@@ -40,7 +45,7 @@ function decreaseQuantity() {
       <p>RM {{ cartItem.price }}</p>
     </div>
     <div class="flex items-center justify-center w-1/5">
-      <p>RM 20</p>
+      <p>RM {{ totalPrice }}</p>
     </div>
   </div>
 </template>
