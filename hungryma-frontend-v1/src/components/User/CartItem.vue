@@ -1,19 +1,41 @@
 <script setup>
 import { ref, computed } from "vue";
+import { useUserCartStore } from "../../store/userCart";
+
+// Set Up: set up UserCart pinia
+const userCartStore = useUserCartStore();
+const {
+  cartItems,
+  updateCartItems,
+  updateSumQuantity,
+  updateSumTotalPrice,
+  sumQuantity,
+  sumTotalPrice,
+} = userCartStore;
 
 const { cartItem } = defineProps(["cartItem"]);
 console.log(`cartItem:`, cartItem);
 
 // Set Up: handling item quantity
-const quantity = ref(1);
+const quantity = ref(cartItem.quantity);
+
+const emits = defineEmits(["currentTotalPrice", "currentQuantity"]);
 
 const totalPrice = computed(() => {
   // This function will be re-evaluated whenever originalValue changes
+  const price = quantity.value * cartItem.price;
+  updateCartItems(cartItem.id, quantity.value, price);
+  emits("currentQuantity", sumQuantity);
+  emits("currentTotalPrice", sumTotalPrice);
+  //   updateSumQuantity();
+  //   updateSumTotalPrice();
 
-  return quantity.value * cartItem.price;
+  return price;
 });
 
 console.log(`price:`, cartItem.price);
+
+// Set Up: functions to handle increase or decrease quantity
 function increaseQuantity() {
   quantity.value++;
   console.log(`add quantity`);

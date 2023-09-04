@@ -10,6 +10,8 @@ export const useUserCartStore = defineStore("userCart", {
         price: 50.9,
         categoriesId: 3,
         imageFood: "",
+        quantity: 1,
+        totalPrice: 0,
       },
       {
         id: 2,
@@ -17,6 +19,8 @@ export const useUserCartStore = defineStore("userCart", {
         price: 24.5,
         categoriesId: 1,
         imageFood: "",
+        quantity: 1,
+        totalPrice: 0,
       },
       {
         id: 3,
@@ -24,6 +28,8 @@ export const useUserCartStore = defineStore("userCart", {
         price: 12.99,
         categoriesId: 2,
         imageFood: "",
+        quantity: 1,
+        totalPrice: 0,
       },
       {
         id: 4,
@@ -31,6 +37,8 @@ export const useUserCartStore = defineStore("userCart", {
         price: 7.25,
         categoriesId: 4,
         imageFood: "",
+        quantity: 1,
+        totalPrice: 0,
       },
       {
         id: 5,
@@ -38,6 +46,8 @@ export const useUserCartStore = defineStore("userCart", {
         price: 35.75,
         categoriesId: 6,
         imageFood: "",
+        quantity: 1,
+        totalPrice: 0,
       },
       {
         id: 6,
@@ -45,8 +55,12 @@ export const useUserCartStore = defineStore("userCart", {
         price: 19.99,
         categoriesId: 5,
         imageFood: "",
+        quantity: 1,
+        totalPrice: 0,
       },
     ],
+    // sumQuantity: 0,
+    // sumTotalPrice: 0,
   }),
   actions: {
     setMenuList(menuObject) {
@@ -54,6 +68,53 @@ export const useUserCartStore = defineStore("userCart", {
 
       console.log(`passed menuObject:`, menuObject);
       this.vendorMenuList = menuObject;
+    },
+    updateCartItems(itemId, newQuantity, newTotalPrice) {
+      const findFood = this.cartItems.find((food) => food.id === itemId);
+      if (findFood) {
+        // Update the quantity property of the found object
+        findFood.quantity = newQuantity;
+        findFood.totalPrice = newTotalPrice;
+        console.log("Quantity updated successfully:", this.cartItems);
+      } else {
+        console.log("Object with id", targetId, "not found in the array.");
+      }
+    },
+    // updateSumQuantity() {
+    //   this.sumQuantity = this.cartItems.reduce(
+    //     (quantitySum, food) => quantitySum + food.quantity,
+    //     0
+    //   );
+    // },
+    // updateSumTotalPrice() {
+    //   this.sumTotalPrice = this.cartItems.reduce(
+    //     (totalPriceSum, food) => totalPriceSum + food.totalPrice,
+    //     0
+    //   );
+    // },
+  },
+  getters: {
+    sumQuantity(state) {
+      // const qValue = this.cartItems.length;
+      // console.log(`qValue:`, qValue);
+      // return qValue;
+      return state.cartItems.reduce(
+        (quantitySum, food) => quantitySum + food.quantity,
+        0
+      );
+      // console.log(`sumQuantity:`, qValue);
+      // return qValue;
+    },
+    sumTotalPrice(state) {
+      // const qValue = this.cartItems.length;
+      // console.log(`qValue:`, qValue);
+      // return qValue;
+      return state.cartItems.reduce(
+        (totalPriceSum, food) => totalPriceSum + food.totalPrice,
+        0
+      );
+      // console.log(`sumQuantity:`, qValue);
+      // return tPValue;
     },
   },
 });

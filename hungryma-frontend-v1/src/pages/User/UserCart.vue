@@ -1,10 +1,11 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useCurrentUserStore } from "../../store/currentUser.js";
 import { useUserCartStore } from "../../store/userCart";
 import { useRouter } from "vue-router";
 import NavbarUser from "../../components/NavbarUser.vue";
 import CartItem from "../../components/User/CartItem.vue";
+import { storeToRefs } from "pinia";
 
 // TO EDIT: temporary variable to set how many times to render child components
 const renderCount = 5;
@@ -13,30 +14,33 @@ const renderCount = 5;
 
 const userCartStore = useUserCartStore();
 const { cartItems } = userCartStore;
-const cartOrders = ref(cartItems);
 
-// const formattedCartItems = computed(() => {
-//   return cartItems.map((item) => {
-//     item.price = item.price.toFixed(2);
-//     return item;
-//   });
+const { sumQuantity, sumTotalPrice } = storeToRefs(userCartStore);
+// const quantitySum = storeToRefs(userCartStore, "sumQuantity");
+// const totalPriceSum = storeToRefs(userCartStore, "sumTotalPrice");
+// const cartOrders = ref(cartItems);
+
+// const quantitySum = ref(sumQuantity);
+// const totalPriceSum = ref(sumTotalPrice);
+
+// watchEffect(() => {
+//   console.log(`test watch effect `, quantitySum.value);
 // });
 
-// Define a function to format the price
-// const formatPrice = (price) => {
-//   if (typeof price === "number") {
-//     return price.toFixed(2);
-//   } else {
-//     return price; // Return the original value if it's not a number
-//   }
-// };
+// function handleQuantity(quantity) {
+//   quantitySum.value = quantity;
+// }
+// function handleTotalPrice(totalPrice) {
+//   totalPriceSum.value = totalPrice;
+// }
 
-// const formattedCartItems = computed(() => {
-//   return cartItems.map((item) => {
-//     item.price = formatPrice(item.price);
-//     return item;
-//   });
-// });
+// // Set Up: calculating total quantity and total price for all cartItems item
+// const sumQuantity = ref(
+//   cartItems.reduce((quantitySum, food) => quantitySum + food.quantity, 0)
+// );
+// const sumTotalPrice = ref(
+//   cartItems.reduce((totalPriceSum, food) => totalPriceSum + food.totalPrice, 0)
+// );
 </script>
 
 <template>
@@ -52,7 +56,8 @@ const cartOrders = ref(cartItems);
           class="flex items-center justify-between pt-6 pb-3 bg-pink-200 border-b-2 border-slate-400"
         >
           <h1 class="text-4xl font-bold">Shopping Cart</h1>
-          <h3 class="text-xl font-bold">{{ cartItems.length }} Items</h3>
+          <!-- <h3 class="text-xl font-bold">{{ cartItems.length }} Items</h3> -->
+          <h3 class="text-xl font-bold">{{ sumQuantity }} Items</h3>
         </div>
         <!-- item list container -->
         <div class="flex-1 w-full bg-purple-100">
@@ -73,6 +78,8 @@ const cartOrders = ref(cartItems);
               v-for="order in cartItems"
               :key="order"
               :cartItem="order"
+              @currentQuantity="handleQuantity"
+              @currentTotalPrice="handleTotalPrice"
             />
           </div>
         </div>
@@ -95,7 +102,9 @@ const cartOrders = ref(cartItems);
           <div class="px-8 py-5 h-1/2">
             <div id="subtotal-item-1" class="flex items-center justify-between">
               <h5 class="text-base font-bold">Total Items</h5>
-              <h5 class="font-medium">{{ cartItems.length }}</h5>
+              <!-- <h5 class="font-medium">{{ cartItems.length }}</h5> -->
+              <!-- <h5 class="font-medium">{{ quantitySum }}</h5> -->
+              <h5 class="font-medium">{{ sumQuantity }}</h5>
             </div>
           </div>
           <!-- subtotal section -->
@@ -108,7 +117,8 @@ const cartOrders = ref(cartItems);
               class="flex items-center justify-between mb-10"
             >
               <h5 class="text-gray-500">Subtotal</h5>
-              <h5 class="font-medium">RM 20</h5>
+              <!-- <h5 class="font-medium">RM {{ totalPriceSum }}</h5> -->
+              <h5 class="font-medium">RM {{ sumTotalPrice.toFixed(2) }}</h5>
             </div>
             <div
               id="subtotal-item-2"
