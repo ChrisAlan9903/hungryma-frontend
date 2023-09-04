@@ -57,7 +57,7 @@ const displayCount = 5;
       <!-- menu searchbar section -->
       <div
         id="search-bar"
-        class="flex items-center h-12 gap-2 px-5 border-2 border-orange-300 rounded-full w-[450px] focus-within:ring-2 focus-within:ring-yellow-200"
+        class="mt-5 flex items-center h-12 gap-2 px-5 border-2 border-orange-300 rounded-full w-[450px] focus-within:ring-2 focus-within:ring-yellow-200"
       >
         <input
           type="text"

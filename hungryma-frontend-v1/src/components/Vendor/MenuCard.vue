@@ -44,7 +44,7 @@ const deleteItem = () => {
     <!-- menu image -->
     <div
       id="menu-image"
-      class="h-1/2 w-full shadow-lg rounded-lg overflow-hidden"
+      class="w-full overflow-hidden rounded-lg shadow-lg h-1/2"
     >
       <img
         :src="
@@ -53,22 +53,22 @@ const deleteItem = () => {
             : 'https://previews.123rf.com/images/danilsneg/danilsneg1706/danilsneg170600158/81077084-pepperoni-pizza-italian-pizza-on-white-background.jpg'
         "
         :alt="imageFood"
-        class="h-full w-full object-cover"
+        class="object-cover w-full h-full"
       />
     </div>
-    <div id="menu-info" class="flex justify-between mt-5 items-center">
-      <h3 class="font-semibold text-lg">{{ foodItem.name }}</h3>
-      <p class="font-medium text-xs">RM {{ foodItem.price }}</p>
+    <div id="menu-info" class="flex items-center justify-between mt-5">
+      <h3 class="text-lg font-semibold">{{ foodItem.name }}</h3>
+      <p class="text-xs font-medium">RM {{ foodItem.price }}</p>
     </div>
     <div
       id="card-bottom"
-      class="flex gap-1 justify-between px-3 mt-6 items-center"
+      class="flex items-center justify-between gap-1 px-3 mt-6"
     >
       <p class="category-badge">{{ foodCategory || "western " }}</p>
 
       <button
         @click="deleteItem"
-        class="bg-orange-500 flex gap-2 items-center text-white text-xs h-8 px-2 py-1 rounded-lg cursor-pointer hover:bg-orange-600"
+        class="flex items-center h-8 gap-2 px-2 py-1 text-xs text-white bg-orange-500 rounded-lg cursor-pointer hover:bg-orange-600"
       >
         Delete Item <i class="material-icons-sharp"> delete </i>
       </button>
