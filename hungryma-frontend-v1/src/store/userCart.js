@@ -80,18 +80,6 @@ export const useUserCartStore = defineStore("userCart", {
         console.log("Object with id", targetId, "not found in the array.");
       }
     },
-    // updateSumQuantity() {
-    //   this.sumQuantity = this.cartItems.reduce(
-    //     (quantitySum, food) => quantitySum + food.quantity,
-    //     0
-    //   );
-    // },
-    // updateSumTotalPrice() {
-    //   this.sumTotalPrice = this.cartItems.reduce(
-    //     (totalPriceSum, food) => totalPriceSum + food.totalPrice,
-    //     0
-    //   );
-    // },
   },
   getters: {
     sumQuantity(state) {
