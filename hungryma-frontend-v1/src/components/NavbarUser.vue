@@ -11,6 +11,8 @@ import { useRouter } from "vue-router";
 const { userPage } = defineProps(["userPage"]);
 const router = useRouter();
 
+console.log(`userPage:`, userPage);
+
 // FEATURE: function for Log Out
 function handleLogout() {
   localStorage.removeItem("accessToken");
@@ -56,11 +58,12 @@ function handleLogout() {
         >
           <p class="">All Menu</p>
         </RouterLink>
+
         <RouterLink
           :to="{ name: 'user-cart' }"
           :class="[
             'border border-transparent rounded-xl px-3 py-1   transition-all delay-75 flex justify-center items-center',
-            userPage === `user-cart`
+            userPage === 'user-cart'
               ? 'bg-orange-500 text-white hover:bg-orange-600'
               : 'hover:border-orange-500 hover:text-orange-500',
           ]"

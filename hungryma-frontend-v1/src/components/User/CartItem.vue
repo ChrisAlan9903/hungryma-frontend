@@ -48,7 +48,7 @@ function decreaseQuantity() {
       <button @click="increaseQuantity" class="font-semibold">+</button>
     </div>
     <div class="flex items-center justify-center w-1/5">
-      <p>RM {{ cartItem.price }}</p>
+      <p>RM {{ cartItem.price.toFixed(2) }}</p>
     </div>
     <div class="flex items-center justify-center w-1/5">
       <p>RM {{ totalPrice.toFixed(2) }}</p>
