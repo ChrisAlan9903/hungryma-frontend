@@ -8,6 +8,7 @@ import UserCart from "../pages/User/UserCart.vue";
 import UserProfile from "../pages/User/UserProfile.vue";
 import UserUpdate from "../pages/User/UserUpdate.vue";
 import UserAllMenu from "../pages/User/UserAllMenu.vue";
+import UserCheckout from "../pages/User/UserCheckout.vue";
 import NavbarUser from "../components/NavbarUser.vue";
 import NavbarVendor from "../components/NavbarVendor.vue";
 import VendorCurrentOrder from "../pages/Vendor/VendorCurrentOrder.vue";
@@ -93,6 +94,14 @@ const router = createRouter({
       name: "user-update",
       components: {
         default: UserUpdate,
+        // navigation: NavbarUser,
+      },
+    },
+    {
+      path: "/user/checkout",
+      name: "user-checkout",
+      components: {
+        default: UserCheckout,
         // navigation: NavbarUser,
       },
     },

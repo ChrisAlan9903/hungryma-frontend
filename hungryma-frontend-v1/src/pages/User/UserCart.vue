@@ -8,7 +8,9 @@ import CartItem from "../../components/User/CartItem.vue";
 import { storeToRefs } from "pinia";
 
 // TO EDIT: temporary variable to set how many times to render child components
-const renderCount = 5;
+
+// Set Up: Basic set up
+const router = useRouter();
 
 // SET UP: pinia store for added cartItems
 
@@ -35,6 +37,8 @@ const salesNetTotal = computed(() => {
 // Set Up: handle submit order (POST req to backend)
 const handleSubmitOrder = async () => {
   // post request here. might need to make several POST req for Order.js and OrderItem.js
+  // redirect to successfull submit order page
+  router.push({ name: "user-checkout" });
 };
 </script>
 
