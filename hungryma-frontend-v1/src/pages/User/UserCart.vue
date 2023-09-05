@@ -15,32 +15,27 @@ const renderCount = 5;
 const userCartStore = useUserCartStore();
 const { cartItems } = userCartStore;
 
+// Set Up: set up pinia to sync with the page state for realtime update
 const { sumQuantity, sumTotalPrice } = storeToRefs(userCartStore);
-// const quantitySum = storeToRefs(userCartStore, "sumQuantity");
-// const totalPriceSum = storeToRefs(userCartStore, "sumTotalPrice");
-// const cartOrders = ref(cartItems);
 
-// const quantitySum = ref(sumQuantity);
-// const totalPriceSum = ref(sumTotalPrice);
+// Set Up: variables to hold state
+const salesDiscount = ref(0);
 
-// watchEffect(() => {
-//   console.log(`test watch effect `, quantitySum.value);
-// });
+const salesTax = computed(() => {
+  const tax = sumTotalPrice.value * 0.1;
+  console.log(`sumTotalPrice:`, sumTotalPrice.value);
+  console.log(`tax:`, tax);
+  return tax;
+});
 
-// function handleQuantity(quantity) {
-//   quantitySum.value = quantity;
-// }
-// function handleTotalPrice(totalPrice) {
-//   totalPriceSum.value = totalPrice;
-// }
+const salesNetTotal = computed(() => {
+  return sumTotalPrice.value + salesTax.value - salesDiscount.value;
+});
 
-// // Set Up: calculating total quantity and total price for all cartItems item
-// const sumQuantity = ref(
-//   cartItems.reduce((quantitySum, food) => quantitySum + food.quantity, 0)
-// );
-// const sumTotalPrice = ref(
-//   cartItems.reduce((totalPriceSum, food) => totalPriceSum + food.totalPrice, 0)
-// );
+// Set Up: handle submit order (POST req to backend)
+const handleSubmitOrder = async () => {
+  // post request here
+};
 </script>
 
 <template>
@@ -125,14 +120,14 @@ const { sumQuantity, sumTotalPrice } = storeToRefs(userCartStore);
               class="flex items-center justify-between mb-10"
             >
               <h5 class="text-gray-500">Sales Discounts</h5>
-              <h5 class="font-medium">- RM 20</h5>
+              <h5 class="font-medium">- RM {{ salesDiscount.toFixed(2) }}</h5>
             </div>
             <div
               id="subtotal-item-3"
               class="flex items-center justify-between mb-10"
             >
-              <h5 class="text-gray-500">Total Sales tax</h5>
-              <h5 class="font-medium">RM 20</h5>
+              <h5 class="text-gray-500">Total Sales tax (10%)</h5>
+              <h5 class="font-medium">RM {{ salesTax.toFixed(2) }}</h5>
             </div>
           </div>
           <!-- Total section -->
@@ -142,10 +137,13 @@ const { sumQuantity, sumTotalPrice } = storeToRefs(userCartStore);
               class="flex justify-between w-full px-8 pt-3 my-3"
             >
               <h4 class="text-xl font-semibold">Total</h4>
-              <h4 class="text-xl font-semibold">RM 60</h4>
+              <h4 class="text-xl font-semibold">
+                RM {{ salesNetTotal.toFixed(2) }}
+              </h4>
             </div>
             <div id="checkout" class="w-full px-8 pt-3">
               <button
+                @click="handleSubmitOrder"
                 id="checkout-btn"
                 class="w-full h-12 text-white transition-all delay-75 bg-orange-500 rounded-lg hover:bg-orange-600"
               >
