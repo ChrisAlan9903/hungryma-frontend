@@ -41,7 +41,7 @@ const foodCategory = categoriesArr[foodItem.categoriesId - 1];
     </div>
     <div id="menu-info" class="flex items-center justify-between mt-5">
       <h3 class="text-lg font-semibold">{{ foodItem.name }}</h3>
-      <p class="text-xs font-medium">RM {{ foodItem.price }}</p>
+      <p class="text-xs font-medium">RM {{ foodItem.price.toFixed(2) }}</p>
     </div>
     <div
       id="card-bottom"
