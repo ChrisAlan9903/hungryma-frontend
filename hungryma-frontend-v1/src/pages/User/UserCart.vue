@@ -34,7 +34,7 @@ const salesNetTotal = computed(() => {
 
 // Set Up: handle submit order (POST req to backend)
 const handleSubmitOrder = async () => {
-  // post request here
+  // post request here. might need to make several POST req for Order.js and OrderItem.js
 };
 </script>
 
