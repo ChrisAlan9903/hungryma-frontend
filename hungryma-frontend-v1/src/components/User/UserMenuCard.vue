@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 
 // Set Up: Receive Props from parent for food data
 const { foodItem } = defineProps(["foodItem"]);
-console.log(`foodItem in each all menu:`, foodItem);
+// console.log(`foodItem in each all menu:`, foodItem);
 
 // Set Up: set up pinia store that is used
 const userCartStore = useUserCartStore();
@@ -25,10 +25,24 @@ const categoriesArr = [
 
 const foodCategory = categoriesArr[foodItem.categoriesId - 1];
 
+const emit = defineEmits(["on-alert"]);
+
+// Set Up: added to cart alert message with timeout
+function showAlertWithTimeout() {
+  alert("Item added to cart !");
+
+  // Set a timeout to close the alert after 3 seconds
+  setTimeout(function () {
+    // Nothing needs to be done here because the built-in alert() will automatically close after a few seconds.
+  }, 1000);
+}
+
 // Set Up: Function to handle add to cart button
 const handleAddToCart = () => {
   // code here
   addItemToCart(foodItem);
+  // ⚠️ TODO: add alert with timeout
+  emit("on-alert");
 };
 </script>
 <template>

@@ -26,7 +26,14 @@ export const useUserCartStore = defineStore("userCart", {
       }
     },
     addItemToCart(foodObject) {
-      this.cartItems.push(foodObject);
+      const findFood = this.cartItems.find((food) => food.id === foodObject.id);
+
+      if (findFood) {
+        findFood.quantity++;
+        console.log(`update add to cart quantity`);
+      } else {
+        this.cartItems.push(foodObject);
+      }
       // ⚠️TODO: need to add if same foodObject is added multiple time, need to increase the quantity in the object instead.
     },
   },
