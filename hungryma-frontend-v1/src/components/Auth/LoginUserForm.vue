@@ -15,7 +15,7 @@ const currentUserStore = useCurrentUserStore();
 const { token, setToken, getCurrentUser } = currentUserStore;
 
 const userAllMenuStore = useUserAllMenuStore();
-const { setAllMenuList } = userAllMenuStore;
+const { setAllMenuList, getAllVendorIds, getVendorsInfo } = userAllMenuStore;
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -41,6 +41,9 @@ const handleLogin = async (e) => {
 
     // getting all menu from backend and set to pinia
     await setAllMenuList(accessToken);
+    const vendorIds = getAllVendorIds();
+    await getVendorsInfo(vendorIds, accessToken);
+
     router.push({ name: "user-home" });
   }
 };

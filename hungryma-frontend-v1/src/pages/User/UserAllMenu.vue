@@ -11,7 +11,7 @@ import { useUserAllMenuStore } from "../../store/userAllMenu";
 // Set Up: set up pinia stores
 const userAllMenuStore = useUserAllMenuStore();
 // const { allMenuList } = userAllMenuStore;
-const { allMenuList } = storeToRefs(userAllMenuStore);
+const { allMenuList, allVendorList } = storeToRefs(userAllMenuStore);
 
 // console.log(`allMenuList:`, allMenuList.value);
 
@@ -46,32 +46,7 @@ const categoriesArr = ref([
 ]);
 
 // TODO: get from pinia or API calls
-const vendorArr = ref([
-  {
-    id: 3,
-    username: "Vendor 3",
-  },
-  {
-    id: 4,
-    username: "Vendor 4",
-  },
-  {
-    id: 5,
-    username: "Vendor 5",
-  },
-  {
-    id: 6,
-    username: "Vendor 6",
-  },
-  {
-    id: 7,
-    username: "Vendor 7",
-  },
-  {
-    id: 8,
-    username: "Vendor 8",
-  },
-]);
+const vendorArr = ref(allVendorList);
 
 const setFilterAllMenu = () => {
   selectedFilter.value = "all-menu";
