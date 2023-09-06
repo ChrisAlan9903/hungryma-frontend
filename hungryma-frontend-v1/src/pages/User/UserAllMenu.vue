@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import NavbarUser from "../../components/NavbarUser.vue";
 import UserMenuCard from "../../components/User/UserMenuCard.vue";
 import AddedToCartAlert from "../../components/User/AddedToCartAlert.vue";
+import MenuSearchBar from "../../components/User/MenuSearchBar.vue";
 import { useCurrentUserStore } from "../../store/currentUser";
 import { useUserAllMenuStore } from "../../store/userAllMenu";
 
@@ -30,6 +31,47 @@ const handleOnAlert = () => {
 const handleCloseAlert = () => {
   cartAlert.value = false;
 };
+
+// Set Up: setting up filter state and function
+const filteredArr = ref(allMenuList.value);
+
+const categoriesArr = ref([
+  "Western",
+  "Asian",
+  "Fast Foods",
+  "Beverages",
+  "Desserts",
+  "Local Delicacies",
+]);
+
+// get from pinia or API calls
+const vendorArr = ref([]);
+
+const setFilterAllMenu = () => {
+  console.log(`filter: all Menu`);
+  filteredArr.value = allMenuList.value;
+  console.log(`filteredArr:`, filteredArr);
+  // TODO: filter all menu below
+};
+
+const setFilterCategory = (filter) => {
+  const index = categoriesArr.value.indexOf(filter);
+  const foodIndex = index + 1;
+  console.log(`index:`, foodIndex, `category:`, filter);
+
+  // TODO: filter menu card below
+  const filteredItem = allMenuList.value.filter(
+    (item) => item.categoriesId === foodIndex
+  );
+
+  console.log(`filteredItem:`, filteredItem);
+  filteredArr.value = filteredItem;
+};
+
+const setFilterVendor = (filter) => {
+  console.log(`filter: vendor`);
+  // TODO: filter all menu below
+};
 </script>
 <template>
   <div class="relative w-full">
@@ -40,30 +82,48 @@ const handleCloseAlert = () => {
       <!-- filter section -->
       <div class="w-1/5 h-full px-8 pt-10 bg-slate-200">
         <div class="py-5">
-          <h4 class="mb-3 text-xl font-medium">Categories</h4>
-          <p :class="['underline-offset-2 underline hover:text-orange-600 ']">
-            item 1
-          </p>
-          <p :class="['underline-offset-2 underline hover:text-orange-600 ']">
-            item 1
-          </p>
-          <p :class="['underline-offset-2 underline hover:text-orange-600 ']">
-            item 1
-          </p>
+          <h4
+            class="mb-3 text-xl font-medium duration-200 cursor-pointer hover:text-orange-600"
+            @click="setFilterAllMenu"
+          >
+            All Menu
+          </h4>
         </div>
         <div class="py-5">
-          <h4 class="mb-3 text-xl font-medium">Vendors</h4>
-          <p :class="['underline-offset-2 underline hover:text-orange-600 ']">
-            item 1
-          </p>
-          <p :class="['underline-offset-2 underline hover:text-orange-600 ']">
-            item 1
-          </p>
-          <p :class="['underline-offset-2 underline hover:text-orange-600 ']">
-            item 1
-          </p>
+          <h4
+            class="mb-3 text-xl font-medium duration-200 cursor-pointer hover:text-orange-600"
+          >
+            Categories
+          </h4>
+          <button
+            @click="setFilterCategory(category)"
+            :class="[
+              'underline-offset-2 underline hover:text-orange-600 block',
+            ]"
+            v-for="category in categoriesArr"
+            :key="category"
+          >
+            {{ category }}
+          </button>
         </div>
         <div class="py-5">
+          <h4
+            class="mb-3 text-xl font-medium duration-200 cursor-pointer hover:text-orange-600"
+          >
+            Vendors
+          </h4>
+          <button
+            @click="setFilterVendor(vendor)"
+            :class="[
+              'underline-offset-2 underline hover:text-orange-600 block',
+            ]"
+            v-for="vendor in vendorArr"
+            :key="vendor"
+          >
+            {{ vendor }}
+          </button>
+        </div>
+        <!-- <div class="py-5">
           <h4 class="mb-3 text-xl font-medium">Price</h4>
           <p :class="['underline-offset-2 underline hover:text-orange-600 ']">
             item 1
@@ -74,28 +134,18 @@ const handleCloseAlert = () => {
           <p :class="['underline-offset-2 underline hover:text-orange-600 ']">
             item 1
           </p>
-        </div>
+        </div> -->
       </div>
 
       <!-- menu list section -->
       <div class="flex flex-col items-center w-4/5 gap-10 py-8">
-        <!-- menu searchbar section -->
-        <div
-          id="search-bar"
-          class="mt-5 flex items-center h-12 gap-2 px-5 border-2 border-orange-300 rounded-full w-[450px] focus-within:ring-2 focus-within:ring-yellow-200"
-        >
-          <input
-            type="text"
-            placeholder="Chicken Burger"
-            class="flex-1 px-3 text-gray-500 outline-none"
-          />
-          <i class="text-orange-300 material-icons-sharp"> search </i>
-        </div>
+        <!-- menu searchbar section (disabled for now)-->
+        <!-- <MenuSearchBar /> -->
 
         <!-- menu list container -->
         <div class="grid grid-cols-3 gap-10 overflow-auto">
           <UserMenuCard
-            v-for="food in allMenuList"
+            v-for="food in filteredArr"
             :key="food.id"
             :foodItem="food"
             @on-alert="handleOnAlert"
