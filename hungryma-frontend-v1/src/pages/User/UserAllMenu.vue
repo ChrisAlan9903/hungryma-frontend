@@ -34,6 +34,7 @@ const handleCloseAlert = () => {
 
 // Set Up: setting up filter state and function
 const filteredArr = ref(allMenuList.value);
+const selectedFilter = ref();
 
 const categoriesArr = ref([
   "Western",
@@ -73,6 +74,7 @@ const vendorArr = ref([
 ]);
 
 const setFilterAllMenu = () => {
+  selectedFilter.value = "all-menu";
   console.log(`filter: all Menu`);
   filteredArr.value = allMenuList.value;
   console.log(`filteredArr:`, filteredArr);
@@ -80,6 +82,7 @@ const setFilterAllMenu = () => {
 };
 
 const setFilterCategory = (filter) => {
+  selectedFilter.value = filter;
   const index = categoriesArr.value.indexOf(filter);
   const foodIndex = index + 1;
   console.log(`index:`, foodIndex, `category:`, filter);
@@ -114,7 +117,12 @@ const setFilterVendor = (filter) => {
       <div class="w-1/5 h-full px-8 pt-10 bg-slate-200">
         <div class="py-5">
           <h4
-            class="mb-3 text-xl font-medium duration-200 cursor-pointer hover:text-orange-600"
+            :class="[
+              'mb-3 text-xl font-medium duration-200 cursor-pointer hover:text-orange-600',
+              selectedFilter === 'all-menu'
+                ? 'text-orange-500'
+                : 'text-gray-600',
+            ]"
             @click="setFilterAllMenu"
           >
             All Menu
@@ -128,7 +136,10 @@ const setFilterVendor = (filter) => {
           </h4>
           <button
             @click="setFilterCategory(category)"
-            :class="['text-gray-600 hover:text-orange-600 block']"
+            :class="[
+              ' hover:text-orange-600 block',
+              selectedFilter === category ? 'text-orange-500' : 'text-gray-600',
+            ]"
             v-for="category in categoriesArr"
             :key="category"
           >

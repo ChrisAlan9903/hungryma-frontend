@@ -3,6 +3,7 @@ import { RouterLink } from "vue-router";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useCurrentUserStore } from "../../store/currentUser";
+import { useUserAllMenuStore } from "../../store/userAllMenu";
 
 const visibility = ref(false);
 const router = useRouter();
@@ -12,6 +13,9 @@ const password = ref("");
 
 const currentUserStore = useCurrentUserStore();
 const { token, setToken, getCurrentUser } = currentUserStore;
+
+const userAllMenuStore = useUserAllMenuStore();
+const { setAllMenuList } = userAllMenuStore;
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -34,6 +38,9 @@ const handleLogin = async (e) => {
     await getCurrentUser();
     console.log(`accessToken after login:`, accessToken);
     console.log(`pinia token after login:`, token);
+
+    // getting all menu from backend and set to pinia
+    await setAllMenuList(accessToken);
     router.push({ name: "user-home" });
   }
 };

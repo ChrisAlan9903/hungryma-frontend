@@ -156,12 +156,35 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
     ],
   }),
   actions: {
-    // example of
-    setMenuList(menuObject) {
-      if (!menuObject) return;
+    // GET req to get all menu list
+    async setAllMenuList(token) {
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      };
 
-      console.log(`passed menuObject:`, menuObject);
-      this.vendorMenuList = menuObject;
+      try {
+        const response = await fetch(
+          "http://localhost:3000/foodItems/",
+          options
+        );
+
+        const data = await response.json();
+        console.log(`allmenuList from backend:`, data);
+
+        const convertToNumber = data.map((obj) => ({
+          ...obj,
+          price: parseFloat(obj.price),
+          quantity: 1,
+          totalPrice: 0.0,
+        }));
+
+        this.allMenuList = convertToNumber;
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   getters: {
