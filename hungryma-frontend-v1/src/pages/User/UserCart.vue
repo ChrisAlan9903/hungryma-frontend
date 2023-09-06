@@ -15,7 +15,7 @@ const router = useRouter();
 // SET UP: pinia store for added cartItems
 
 const userCartStore = useUserCartStore();
-const { cartItems } = userCartStore;
+const { cartItems, clearCart } = userCartStore;
 
 // Set Up: set up pinia to sync with the page state for realtime update
 const { sumQuantity, sumTotalPrice } = storeToRefs(userCartStore);
@@ -36,8 +36,9 @@ const salesNetTotal = computed(() => {
 
 // Set Up: handle submit order (POST req to backend)
 const handleSubmitOrder = async () => {
-  // post request here. might need to make several POST req for Order.js and OrderItem.js
+  // TODO: post request here. might need to make several POST req for Order.js and OrderItem.js
   // redirect to successfull submit order page
+  clearCart();
   router.push({ name: "user-checkout" });
 };
 </script>

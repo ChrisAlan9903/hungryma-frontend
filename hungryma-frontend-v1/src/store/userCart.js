@@ -25,6 +25,10 @@ export const useUserCartStore = defineStore("userCart", {
         console.log("Object with id", targetId, "not found in the array.");
       }
     },
+    clearCart() {
+      this.cartItems = [];
+    },
+
     addItemToCart(foodObject) {
       const findFood = this.cartItems.find((food) => food.id === foodObject.id);
 

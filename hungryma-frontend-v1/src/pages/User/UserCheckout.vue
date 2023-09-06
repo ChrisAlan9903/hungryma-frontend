@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import { useUserCartStore } from "../../store/userCart";
 </script>
 <template>
   <section

@@ -25,7 +25,7 @@ const handleOnAlert = () => {
 
   setTimeout(() => {
     cartAlert.value = false;
-  }, 5000);
+  }, 1000);
 };
 const handleCloseAlert = () => {
   cartAlert.value = false;
