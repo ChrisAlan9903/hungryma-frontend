@@ -63,6 +63,7 @@ onBeforeMount(async () => {
   <NavbarUser userPage="user-profile" />
   <section id="ongoing-order" class="flex justify-center max-h-screen p-3 m-24">
     <div
+      v-if="currentUserInfo"
       class="w-1/2 overflow-hidden bg-white border-2 border-black rounded-lg shadow-xl"
     >
       <div class="flex justify-between px-4 py-5 sm:px-6">
@@ -126,8 +127,8 @@ onBeforeMount(async () => {
         </dl>
       </div>
     </div>
-    <!-- <div v-else>
+    <div v-else>
       <p>Loading user Info..</p>
-    </div> -->
+    </div>
   </section>
 </template>
