@@ -1,13 +1,16 @@
 <script setup>
 import { ref } from "vue";
+import { useUserCartStore } from "../../store/userCart";
+import { storeToRefs } from "pinia";
 
-// TO EDIT: temporary variables for testing frontend only
-const foodItem = {
-  name: "Food 1",
-  price: 50.9,
-  categoriesId: 3,
-  imageFood: "",
-};
+// Set Up: Receive Props from parent for food data
+const { foodItem } = defineProps(["foodItem"]);
+console.log(`foodItem in each all menu:`, foodItem);
+
+// Set Up: set up pinia store that is used
+const userCartStore = useUserCartStore();
+const { cartItems, addItemToCart } = userCartStore;
+// const { cartItems, addItemToCart } = storeToRefs(userCartStore);
 
 const imageFood = ref("");
 
@@ -21,6 +24,12 @@ const categoriesArr = [
 ];
 
 const foodCategory = categoriesArr[foodItem.categoriesId - 1];
+
+// Set Up: Function to handle add to cart button
+const handleAddToCart = () => {
+  // code here
+  addItemToCart(foodItem);
+};
 </script>
 <template>
   <div class="card">
@@ -50,7 +59,7 @@ const foodCategory = categoriesArr[foodItem.categoriesId - 1];
       <p class="category-badge">{{ foodCategory || "western " }}</p>
 
       <button
-        @click="deleteItem"
+        @click="handleAddToCart"
         class="flex items-center h-8 gap-2 px-2 py-1 text-xs text-white bg-orange-500 rounded-lg cursor-pointer hover:bg-orange-600"
       >
         Add to Cart <i class="material-icons-sharp"> shopping_cart </i>

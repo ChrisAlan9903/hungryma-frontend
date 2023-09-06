@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useUserAllMenu = defineStore("userAllMenu", {
+export const useUserAllMenuStore = defineStore("userAllMenu", {
   state: () => ({
     allMenuList: [
       {

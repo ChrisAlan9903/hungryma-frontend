@@ -6,7 +6,7 @@ import { useUserCartStore } from "../../store/userCart";
 const userCartStore = useUserCartStore();
 const {
   cartItems,
-  updateCartItems,
+  updateCartItem,
   updateSumQuantity,
   updateSumTotalPrice,
   sumQuantity,
@@ -24,7 +24,7 @@ const emits = defineEmits(["currentTotalPrice", "currentQuantity"]);
 const totalPrice = computed(() => {
   // This function will be re-evaluated whenever originalValue changes
   const price = quantity.value * cartItem.price;
-  updateCartItems(cartItem.id, quantity.value, price);
+  updateCartItem(cartItem.id, quantity.value, price);
   emits("currentQuantity", sumQuantity);
   emits("currentTotalPrice", sumTotalPrice);
   //   updateSumQuantity();

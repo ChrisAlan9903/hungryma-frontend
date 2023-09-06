@@ -1,7 +1,17 @@
 <script setup>
+import { storeToRefs } from "pinia";
 import NavbarUser from "../../components/NavbarUser.vue";
 import UserMenuCard from "../../components/User/UserMenuCard.vue";
 import { useCurrentUserStore } from "../../store/currentUser";
+import { useUserAllMenuStore } from "../../store/userAllMenu";
+
+// Set Up: set up pinia stores
+const userAllMenuStore = useUserAllMenuStore();
+// const { allMenuList } = userAllMenuStore;
+const { allMenuList } = storeToRefs(userAllMenuStore);
+
+// console.log(`allMenuList:`, allMenuList.value);
+
 const currentUserStore = useCurrentUserStore();
 const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
 
@@ -69,7 +79,11 @@ const displayCount = 5;
 
       <!-- menu list container -->
       <div class="grid grid-cols-3 gap-10 overflow-auto">
-        <UserMenuCard v-for="index in displayCount" :key="index" />
+        <UserMenuCard
+          v-for="food in allMenuList"
+          :key="food"
+          :foodItem="food"
+        />
         <!-- <UserMenuCard /> -->
       </div>
     </div>
