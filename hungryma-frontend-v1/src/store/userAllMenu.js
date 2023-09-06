@@ -11,6 +11,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0,
+        vendorId: 4,
       },
       {
         id: 2,
@@ -20,6 +21,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0,
+        vendorId: 6,
       },
       {
         id: 3,
@@ -29,6 +31,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0,
+        vendorId: 7,
       },
       {
         id: 4,
@@ -38,6 +41,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0,
+        vendorId: 5,
       },
       {
         id: 5,
@@ -47,6 +51,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0,
+        vendorId: 8,
       },
       {
         id: 6,
@@ -56,6 +61,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0,
+        vendorId: 3,
       },
       {
         id: 7,
@@ -65,6 +71,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 6,
       },
       {
         id: 8,
@@ -74,6 +81,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 3,
       },
       {
         id: 9,
@@ -83,6 +91,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 8,
       },
       {
         id: 10,
@@ -92,6 +101,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 4,
       },
       {
         id: 11,
@@ -101,6 +111,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 7,
       },
       {
         id: 12,
@@ -110,6 +121,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 5,
       },
       {
         id: 13,
@@ -119,6 +131,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 4,
       },
       {
         id: 14,
@@ -128,6 +141,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 6,
       },
       {
         id: 15,
@@ -137,6 +151,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
         imageFood: "",
         quantity: 1,
         totalPrice: 0.0,
+        vendorId: 3,
       },
     ],
   }),

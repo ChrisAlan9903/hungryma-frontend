@@ -44,8 +44,33 @@ const categoriesArr = ref([
   "Local Delicacies",
 ]);
 
-// get from pinia or API calls
-const vendorArr = ref([]);
+// TODO: get from pinia or API calls
+const vendorArr = ref([
+  {
+    id: 3,
+    username: "Vendor 3",
+  },
+  {
+    id: 4,
+    username: "Vendor 4",
+  },
+  {
+    id: 5,
+    username: "Vendor 5",
+  },
+  {
+    id: 6,
+    username: "Vendor 6",
+  },
+  {
+    id: 7,
+    username: "Vendor 7",
+  },
+  {
+    id: 8,
+    username: "Vendor 8",
+  },
+]);
 
 const setFilterAllMenu = () => {
   console.log(`filter: all Menu`);
@@ -69,8 +94,14 @@ const setFilterCategory = (filter) => {
 };
 
 const setFilterVendor = (filter) => {
-  console.log(`filter: vendor`);
+  console.log(`filter: vendor`, `vendorId:`, filter);
   // TODO: filter all menu below
+  const filteredItem = allMenuList.value.filter(
+    (vendor) => vendor.vendorId === filter
+  );
+
+  console.log(`filteredItem:`, filteredItem);
+  filteredArr.value = filteredItem;
 };
 </script>
 <template>
@@ -113,14 +144,14 @@ const setFilterVendor = (filter) => {
             Vendors
           </h4>
           <button
-            @click="setFilterVendor(vendor)"
+            @click="setFilterVendor(vendor.id)"
             :class="[
               'underline-offset-2 underline hover:text-orange-600 block',
             ]"
             v-for="vendor in vendorArr"
             :key="vendor"
           >
-            {{ vendor }}
+            {{ vendor.username }}
           </button>
         </div>
         <!-- <div class="py-5">
