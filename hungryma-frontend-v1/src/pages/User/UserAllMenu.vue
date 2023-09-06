@@ -128,7 +128,7 @@ const setFilterVendor = (filter) => {
           </h4>
           <button
             @click="setFilterCategory(category)"
-            :class="[' hover:text-orange-600 block']"
+            :class="['text-gray-600 hover:text-orange-600 block']"
             v-for="category in categoriesArr"
             :key="category"
           >
@@ -143,7 +143,7 @@ const setFilterVendor = (filter) => {
           </h4>
           <button
             @click="setFilterVendor(vendor.id)"
-            :class="[' hover:text-orange-600 block']"
+            :class="['text-gray-600 hover:text-orange-600 block']"
             v-for="vendor in vendorArr"
             :key="vendor"
           >
