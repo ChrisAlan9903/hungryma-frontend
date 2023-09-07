@@ -1,10 +1,11 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUpdated, onBeforeMount } from "vue";
 import NavbarVendor from "@/components/NavbarVendor.vue";
 import { RouterLink, useRouter } from "vue-router";
 import MenuCard from "@/components/Vendor/MenuCard.vue";
 import { useVendorMenusStore } from "../../store/vendorMenus";
 import { useCurrentUserStore } from "../../store/currentUser";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
 
@@ -17,30 +18,11 @@ const accessToken = localStorage.getItem("accessToken");
 
 // Set Up: pinia store for VendorMenuStore
 const vendorMenusStore = useVendorMenusStore();
-const { vendorMenuList, setMenuList } = vendorMenusStore;
+const { setVendorMenuList, getMenus } = vendorMenusStore;
+const { vendorMenuList } = storeToRefs(vendorMenusStore);
 
 // Set Up: creating an array to hold all menu from pinia
 const menuItems = ref();
-
-// get all menu for vendor from backend and store to pinia
-// async function getMenus() {
-//   const options = {
-//     method: "GET",
-//     headers: {
-//       Authorization: accessToken,
-//     },
-//   };
-
-//   try {
-//     const response = await fetch("http://localhost:3000/foodItems/", options);
-//     const data = await response.json();
-//     console.log(data);
-//     return data;
-//   } catch (err) {
-//     console.error(err);
-//     return err;
-//   }
-// }
 
 // delete request API for backend
 async function deleteFoodItem(foodId) {
@@ -73,21 +55,31 @@ async function handleDelete(itemId) {
 
   if (deleteStatus == 1) {
     alert(`Menu deleted !`);
-    // router.push("/vendor/menus");
+
     mountPage();
-  } else {
+
+    router.push("/vendor/menus");
+  } else if (deleteStatus.error) {
     alert(`Error in deleting !`);
   }
 }
 
 // Set Up: mounting current data
-// const mountPage = async () => {
-//   menuItems.value = await getMenus();
-//   console.log(`menuItems:`, menuItems.value);
-//   setMenuList(menuItems.value);
-// };
+const mountPage = async () => {
+  menuItems.value = await getMenus(accessToken);
+  console.log(`menuItems:`, menuItems.value);
+  setVendorMenuList(menuItems.value);
+};
 
-// onMounted(() => {
+// onBeforeMount(() => {
+//   mountPage();
+// });
+
+onMounted(() => {
+  mountPage();
+});
+
+// onUpdated(() => {
 //   mountPage();
 // });
 </script>
