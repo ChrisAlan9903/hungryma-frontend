@@ -22,7 +22,7 @@ export const useUserCartStore = defineStore("userCart", {
         findFood.totalPrice = newTotalPrice;
         console.log("Quantity updated successfully:", this.cartItems);
       } else {
-        console.log("Object with id", targetId, "not found in the array.");
+        console.log("Object with id", itemId, "not found in the array.");
       }
     },
     clearCart() {
@@ -39,6 +39,57 @@ export const useUserCartStore = defineStore("userCart", {
         this.cartItems.push(foodObject);
       }
       // ⚠️TODO: need to add if same foodObject is added multiple time, need to increase the quantity in the object instead.
+    },
+
+    async createOrder(token, userId, orderAmount) {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          userId: userId,
+          totalAmount: orderAmount,
+          orderStatus: "pending",
+        }),
+      };
+
+      try {
+        const response = await fetch("http://localhost:3000/orders/", options);
+        const data = await response.json();
+        console.log(`Order Created:`, data);
+        return data;
+      } catch (err) {
+        console.error(err);
+      }
+    },
+
+    async createOrderItem(token, foodObject, orderId) {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          orderId: orderId,
+          foodItemId: foodObject.id,
+          quantity: foodObject.quantity,
+          price: foodObject.totalPrice,
+        }),
+      };
+
+      try {
+        const response = await fetch(
+          "http://localhost:3000/orderItems/",
+          options
+        );
+        const data = await response.json();
+        console.log(`orderItem created:`, data);
+      } catch (err) {
+        console.error(err);
+      }
     },
   },
   getters: {

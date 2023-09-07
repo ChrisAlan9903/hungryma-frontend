@@ -12,10 +12,13 @@ import { storeToRefs } from "pinia";
 // Set Up: Basic set up
 const router = useRouter();
 
-// SET UP: pinia store for added cartItems
+//Set Up: pinia store to get current user Id
+const currentUserStore = useCurrentUserStore();
+const { token, currentUser } = currentUserStore;
 
+// SET UP: pinia store for added cartItems
 const userCartStore = useUserCartStore();
-const { cartItems, clearCart } = userCartStore;
+const { cartItems, clearCart, createOrder, createOrderItem } = userCartStore;
 
 // Set Up: set up pinia to sync with the page state for realtime update
 const { sumQuantity, sumTotalPrice } = storeToRefs(userCartStore);
@@ -37,9 +40,38 @@ const salesNetTotal = computed(() => {
 // Set Up: handle submit order (POST req to backend)
 const handleSubmitOrder = async () => {
   // TODO: post request here. might need to make several POST req for Order.js and OrderItem.js
-  // redirect to successfull submit order page
-  clearCart();
-  router.push({ name: "user-checkout" });
+  const userId = currentUser.id;
+  const orderAmount = parseFloat(salesNetTotal.value.toFixed(2));
+  console.log(`userId:`, userId);
+  console.log(`orderAmount:`, orderAmount);
+
+  const createdOrder = await createOrder(token, userId, orderAmount);
+  console.log(`createdOrder:`, createdOrder);
+
+  if (createdOrder.error) {
+    alert(`Error in submiting Order !`);
+  } else {
+    alert(`Order placed !`);
+
+    console.log(`createdOrder.id:`, createdOrder.id);
+
+    for (const item of cartItems) {
+      try {
+        const createdOrderItem = await createOrderItem(
+          token,
+          item,
+          createdOrder.id
+        );
+        console.log(`createdOrderItem:`, createdOrderItem);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // redirect to successfull submit order page
+    clearCart();
+    router.push({ name: "user-checkout" });
+  }
 };
 </script>
 
