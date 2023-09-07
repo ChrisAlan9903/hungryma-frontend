@@ -23,24 +23,24 @@ const { vendorMenuList, setMenuList } = vendorMenusStore;
 const menuItems = ref();
 
 // get all menu for vendor from backend and store to pinia
-async function getMenus() {
-  const options = {
-    method: "GET",
-    headers: {
-      Authorization: accessToken,
-    },
-  };
+// async function getMenus() {
+//   const options = {
+//     method: "GET",
+//     headers: {
+//       Authorization: accessToken,
+//     },
+//   };
 
-  try {
-    const response = await fetch("http://localhost:3000/foodItems/", options);
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (err) {
-    console.error(err);
-    return err;
-  }
-}
+//   try {
+//     const response = await fetch("http://localhost:3000/foodItems/", options);
+//     const data = await response.json();
+//     console.log(data);
+//     return data;
+//   } catch (err) {
+//     console.error(err);
+//     return err;
+//   }
+// }
 
 // delete request API for backend
 async function deleteFoodItem(foodId) {
@@ -81,27 +81,27 @@ async function handleDelete(itemId) {
 }
 
 // Set Up: mounting current data
-const mountPage = async () => {
-  menuItems.value = await getMenus();
-  console.log(`menuItems:`, menuItems.value);
-  setMenuList(menuItems.value);
-};
+// const mountPage = async () => {
+//   menuItems.value = await getMenus();
+//   console.log(`menuItems:`, menuItems.value);
+//   setMenuList(menuItems.value);
+// };
 
-onMounted(() => {
-  mountPage();
-});
+// onMounted(() => {
+//   mountPage();
+// });
 </script>
 <template>
   <NavbarVendor vendorPage="all-menus" />
   <section
     id="ongoing-order"
-    class="bg-red-400 max-h-screen h-screen flex flex-col m-10 shadow-lg rounded-3xl overflow-hidden border-2 border-gray-800"
+    class="flex flex-col h-screen max-h-screen m-10 overflow-hidden bg-red-400 border-2 border-gray-800 shadow-lg rounded-3xl"
   >
     <!-- Page title -->
     <div
-      class="w-full h-24 flex justify-between items-center py-5 px-6 bg-gray-200"
+      class="flex items-center justify-between w-full h-24 px-6 py-5 bg-gray-200"
     >
-      <h1 class="text-xl font-semibold flex items-center">Past Orders</h1>
+      <h1 class="flex items-center text-xl font-semibold">Past Orders</h1>
 
       <RouterLink
         :to="{ name: 'vendor-add-menu' }"
@@ -115,14 +115,14 @@ onMounted(() => {
     </div>
     <!-- Page content  -->
     <div
-      class="flex-1 bg-orange-300 py-10 flex px-10 gap-5 max-w-full flex-wrap overflow-auto"
+      class="flex flex-wrap flex-1 max-w-full gap-5 px-10 py-10 overflow-auto bg-orange-300"
     >
       <!-- TODO: will change to v-for later -->
       <div
         id="menu-list-wrapper"
-        v-for="item in menuItems"
+        v-for="item in vendorMenuList"
         :key="item.id"
-        class="w-fulls flex gap-9 flex-wrap"
+        class="flex flex-wrap w-fulls gap-9"
       >
         <MenuCard :foodItem="item" @delete="handleDelete(item.id)" />
       </div>

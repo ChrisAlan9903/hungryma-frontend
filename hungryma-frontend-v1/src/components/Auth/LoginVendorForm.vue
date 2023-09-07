@@ -3,9 +3,14 @@ import { RouterLink } from "vue-router";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useCurrentUserStore } from "../../store/currentUser";
+import { useVendorMenusStore } from "../../store/vendorMenus";
 
 const currentUserStore = useCurrentUserStore();
 const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
+
+// Set Up: Set Up vendorMenu to set all vendor menu to pinia
+const vendorMenusStore = useVendorMenusStore();
+const { vendorMenuList, setVendorMenuList, getMenus } = vendorMenusStore;
 
 const router = useRouter();
 const visibility = ref(false);
@@ -32,6 +37,8 @@ const handleLogin = async (e) => {
     // setting currentUser in Pinia
     setToken(accessToken);
     await getCurrentUser();
+    const vendorAllMenu = await getMenus(accessToken);
+    setVendorMenuList(vendorAllMenu);
 
     router.push({ name: "vendor-current-order" });
   }

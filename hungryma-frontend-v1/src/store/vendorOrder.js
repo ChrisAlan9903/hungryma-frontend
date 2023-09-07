@@ -5,7 +5,7 @@ export const useVendorOrderStore = defineStore("vendorOrder", {
     vendorOrderList: null,
   }),
   actions: {
-    setMenuList(menuObject) {
+    setVendorOrderList(menuObject) {
       if (!menuObject) return;
 
       console.log(`passed menuObject:`, menuObject);
