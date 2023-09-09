@@ -38,6 +38,7 @@ const handleLogin = async (e) => {
     setToken(accessToken);
     await getCurrentUser();
     const vendorAllMenu = await getMenus(accessToken);
+    console.log(`getMenus output:`, vendorAllMenu);
     setVendorMenuList(vendorAllMenu);
 
     router.push({ name: "vendor-current-order" });

@@ -45,6 +45,7 @@ export const useUserAllMenuStore = defineStore("userAllMenu", {
 
       return uniqueVendors;
     },
+
     async getVendorsInfo(ids, token) {
       const options = {
         method: "GET",

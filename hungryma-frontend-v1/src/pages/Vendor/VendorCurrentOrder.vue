@@ -2,10 +2,53 @@
 import { ref, onMounted } from "vue";
 import NavbarVendor from "../../components/NavbarVendor.vue";
 import { useCurrentUserStore } from "../../store/currentUser";
+import { useVendorMenusStore } from "../../store/vendorMenus";
+import { storeToRefs } from "pinia";
 
 // Set Up: pinia store for currentUser
 const currentUserStore = useCurrentUserStore();
 const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
+
+// Set Up: pinia store for vendorMenu
+const vendorMenuStore = useVendorMenusStore();
+const {
+  vendorMenuList,
+  // vendorOrderItems,
+  setVendorMenuIds,
+  getVendorOrderItems,
+  getOrderFoodName,
+} = vendorMenuStore;
+
+const { vendorOrderItems } = storeToRefs(vendorMenuStore);
+
+const { vendorMenuIds } = storeToRefs(vendorMenuStore);
+
+// Set Up: get all vendor Food Ids
+const foodIds = ref([]);
+for (const food of vendorMenuList) {
+  foodIds.value.push(food.id);
+}
+console.log(`Extracted foodIds:`, foodIds.value);
+setVendorMenuIds(foodIds.value);
+
+// // get all orderItem from the vendorMenuIds
+// getVendorOrderItems(token, vendorMenuIds.value);
+
+// set up the final food Order object
+
+async function foodOrderFinalSetup() {
+  const finalFoodOrderArr = [];
+  for (const foodItem of vendorOrderItems) {
+    const foodName = await getOrderFoodName(token, foodItem.foodItemId);
+    const foodObject = {
+      ...foodItem,
+      foodName: foodName.name,
+    };
+    finalFoodOrderArr.push(foodObject);
+  }
+
+  return finalFoodOrderArr;
+}
 
 // Set Up: get Token from localStorage
 const accessToken = localStorage.getItem("accessToken");
@@ -27,6 +70,13 @@ async function getUserInfo() {
 onMounted(async () => {
   await getUserInfo();
   console.log(`getUserInfo has completed. Check pinia store for changes`);
+
+  // get all orderItem from the vendorMenuIds
+  getVendorOrderItems(token, vendorMenuIds.value);
+
+  // setting up all FoodOrder object
+  const orderData = await foodOrderFinalSetup();
+  console.log(`ORDER DATA:`, orderData);
 });
 </script>
 <template>
@@ -34,7 +84,7 @@ onMounted(async () => {
     <NavbarVendor vendorPage="current-order" />
     <!-- test pinia section -->
     <!-- <section class="w-full h-56 bg-slate-300">
-      <div class="p-20 flex flex-col">
+      <div class="flex flex-col p-20">
         <h2 class="flex-wrap">
           token: <span>{{ token }}</span>
         </h2>
@@ -44,40 +94,40 @@ onMounted(async () => {
 
     <section
       id="ongoing-order"
-      class="bg-red-400 max-h-screen h-screen flex flex-col m-10 shadow-lg rounded-3xl overflow-hidden border-2 border-gray-800"
+      class="flex flex-col h-screen max-h-screen m-10 overflow-hidden bg-red-400 border-2 border-gray-800 shadow-lg rounded-3xl"
     >
       <div
-        class="w-full h-24 flex justify-start items-center py-5 px-6 bg-gray-200"
+        class="flex items-center justify-start w-full h-24 px-6 py-5 bg-gray-200"
       >
-        <h1 class="w-full text-xl font-semibold flex items-center">
+        <h1 class="flex items-center w-full text-xl font-semibold">
           Current Orders
         </h1>
       </div>
-      <div class="flex-1 bg-orange-300 py-10">
+      <div class="flex-1 py-10 bg-orange-300">
         <!-- table components start-->
         <div
           class="shadow-lg rounded-lg overflow-auto max-h-[550px] mx-4 md:mx-10 bg-white"
         >
-          <table class="w-full table-fixed overflow-auto">
+          <table class="w-full overflow-auto table-fixed">
             <thead class="sticky top-0">
               <tr class="bg-gray-100">
                 <th
-                  class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
+                  class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
                 >
                   Order Id
                 </th>
                 <th
-                  class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
+                  class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
                 >
                   Items
                 </th>
                 <th
-                  class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
+                  class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
                 >
                   Status
                 </th>
                 <th
-                  class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase"
+                  class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
                 >
                   Phone
                 </th>
@@ -86,56 +136,56 @@ onMounted(async () => {
             <tbody class="bg-white">
               <!-------------- Example to loop for : START  ----------------------------->
               <tr>
-                <td class="py-4 px-6 border-b border-gray-200">John Doe</td>
-                <td class="py-4 px-6 border-b border-gray-200 truncate">
+                <td class="px-6 py-4 border-b border-gray-200">John Doe</td>
+                <td class="px-6 py-4 truncate border-b border-gray-200">
                   <div>Chicken Burger</div>
                   <div>Hawaiian Pizza</div>
                   <div>Lamb Steak</div>
                 </td>
-                <td class="py-4 px-6 border-b border-gray-200">
+                <td class="px-6 py-4 border-b border-gray-200">
                   <span
-                    class="bg-yellow-500 text-white py-1 px-2 rounded-full text-xs"
+                    class="px-2 py-1 text-xs text-white bg-yellow-500 rounded-full"
                     >Pending</span
                   >
                 </td>
-                <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
+                <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td>
               </tr>
               <!-------------- Example to loop for : END  ----------------------------->
               <tr>
-                <td class="py-4 px-6 border-b border-gray-200">Jane Doe</td>
-                <td class="py-4 px-6 border-b border-gray-200 truncate">
+                <td class="px-6 py-4 border-b border-gray-200">Jane Doe</td>
+                <td class="px-6 py-4 truncate border-b border-gray-200">
                   janedoe@gmail.com
                 </td>
-                <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
-                <td class="py-4 px-6 border-b border-gray-200">
+                <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td>
+                <td class="px-6 py-4 border-b border-gray-200">
                   <span
-                    class="bg-red-500 text-white py-1 px-2 rounded-full text-xs"
+                    class="px-2 py-1 text-xs text-white bg-red-500 rounded-full"
                     >Inactive</span
                   >
                 </td>
               </tr>
               <tr>
-                <td class="py-4 px-6 border-b border-gray-200">Jane Doe</td>
-                <td class="py-4 px-6 border-b border-gray-200 truncate">
+                <td class="px-6 py-4 border-b border-gray-200">Jane Doe</td>
+                <td class="px-6 py-4 truncate border-b border-gray-200">
                   janedoe@gmail.com
                 </td>
-                <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
-                <td class="py-4 px-6 border-b border-gray-200">
+                <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td>
+                <td class="px-6 py-4 border-b border-gray-200">
                   <span
-                    class="bg-red-500 text-white py-1 px-2 rounded-full text-xs"
+                    class="px-2 py-1 text-xs text-white bg-red-500 rounded-full"
                     >Inactive</span
                   >
                 </td>
               </tr>
               <tr>
-                <td class="py-4 px-6 border-b border-gray-200">Jane Doe</td>
-                <td class="py-4 px-6 border-b border-gray-200 truncate">
+                <td class="px-6 py-4 border-b border-gray-200">Jane Doe</td>
+                <td class="px-6 py-4 truncate border-b border-gray-200">
                   janedoe@gmail.com
                 </td>
-                <td class="py-4 px-6 border-b border-gray-200">555-555-5555</td>
-                <td class="py-4 px-6 border-b border-gray-200">
+                <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td>
+                <td class="px-6 py-4 border-b border-gray-200">
                   <span
-                    class="bg-red-500 text-white py-1 px-2 rounded-full text-xs"
+                    class="px-2 py-1 text-xs text-white bg-red-500 rounded-full"
                     >Inactive</span
                   >
                 </td>
