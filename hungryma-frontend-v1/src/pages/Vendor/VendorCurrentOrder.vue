@@ -16,6 +16,7 @@ const {
   setVendorMenuIds,
   getVendorOrderItems,
   setVendorOrderList,
+  getOrderName,
 } = vendorMenu2Store;
 
 const { vendorMenuIds, vendorOrderList } = storeToRefs(vendorMenu2Store);
@@ -44,6 +45,9 @@ async function getVendorOrders() {
 }
 
 // get all orderItem + foodname
+async function getVendorOrderName() {
+  await getOrderName(accessToken);
+}
 
 // set up the final food Order object by grouping
 
@@ -71,6 +75,7 @@ onMounted(async () => {
   // get all orderItem from the vendorMenuIds
   await getVendorFoodIds();
   await getVendorOrders();
+  await getVendorOrderName();
 });
 </script>
 <template>

@@ -4,7 +4,7 @@ export const useVendorMenus2Store = defineStore("vendorMenus2", {
   state: () => ({
     vendorMenuIds: null, // list of vendor food ids
     vendorOrderList: null, // list of all vendor orders based on matching food ids
-    vendorOrderList2: null, // list of vendor orders + food name
+    vendorOrderList2: [], // list of vendor orders + food name
     vendorOrderList3: null, // list of GROUPED vendor orders
   }),
   actions: {
@@ -60,6 +60,30 @@ export const useVendorMenus2Store = defineStore("vendorMenus2", {
       if (!orderItems) return;
 
       this.vendorOrderList = orderItems;
+    },
+    async getOrderName(token) {
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      };
+
+      // const idsArray = [24, 25, 26]; // Replace with your array of IDs
+
+      for (const id of this.vendorOrderList) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/foodItems/${id.foodItemId}`,
+            options
+          );
+          const data = await response.json();
+          //   console.log(`Data for ID ${id}:`, data);
+          this.vendorOrderList2.push({ ...id, foodName: data.name });
+        } catch (err) {
+          console.error(`Error for ID ${id}:`, err);
+        }
+      }
     },
   },
 });
