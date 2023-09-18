@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import NavbarVendor from "../../components/NavbarVendor.vue";
 import { useCurrentUserStore } from "../../store/currentUser";
-import { useVendorMenusStore } from "../../store/vendorMenus";
+import { useVendorMenus2Store } from "../../store/vendorMenus2";
 import { storeToRefs } from "pinia";
 
 // Set Up: pinia store for currentUser
@@ -10,31 +10,42 @@ const currentUserStore = useCurrentUserStore();
 const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
 
 // Set Up: pinia store for vendorMenu
-const vendorMenuStore = useVendorMenusStore();
+const vendorMenu2Store = useVendorMenus2Store();
 const {
-  vendorMenuList,
-  // vendorOrderItems,
+  getVendorMenus,
   setVendorMenuIds,
   getVendorOrderItems,
-  getOrderFoodName,
-  foodOrderFinalSetup,
-} = vendorMenuStore;
+  setVendorOrderList,
+} = vendorMenu2Store;
 
-const { vendorOrderItems } = storeToRefs(vendorMenuStore);
-
-const { vendorMenuIds } = storeToRefs(vendorMenuStore);
+const { vendorMenuIds, vendorOrderList } = storeToRefs(vendorMenu2Store);
 
 // Set Up: get all vendor Food Ids
-const foodIds = ref([]);
-for (const food of vendorMenuList) {
-  foodIds.value.push(food.id);
+async function getVendorFoodIds() {
+  const allVendorFood = await getVendorMenus(accessToken);
+  console.log(`allVendorFood:`, allVendorFood);
+
+  const menuIds = [];
+  for (const food of allVendorFood) {
+    menuIds.push(food.id);
+  }
+  // console.log(`menuIds:`, menuIds);
+  setVendorMenuIds(menuIds);
 }
-console.log(`Extracted foodIds:`, foodIds.value);
-setVendorMenuIds(foodIds.value);
 
-// // get all orderItem from the vendorMenuIds
+// get all orderItem from the vendorMenuIds
+async function getVendorOrders() {
+  const allVendorOrderItems = await getVendorOrderItems(
+    accessToken,
+    vendorMenuIds.value
+  );
+  // console.log(allVendorOrderItems);
+  setVendorOrderList(allVendorOrderItems);
+}
 
-// set up the final food Order object
+// get all orderItem + foodname
+
+// set up the final food Order object by grouping
 
 // Set Up: get Token from localStorage
 const accessToken = localStorage.getItem("accessToken");
@@ -55,15 +66,11 @@ async function getUserInfo() {
 // Set Up: Run get User info when page is Mounted
 onMounted(async () => {
   await getUserInfo();
-  console.log(`getUserInfo has completed. Check pinia store for changes`);
+  // console.log(`getUserInfo has completed. Check pinia store for changes`);
 
   // get all orderItem from the vendorMenuIds
-  getVendorOrderItems(token, vendorMenuIds.value);
-
-  // setting up all FoodOrder object
-  await foodOrderFinalSetup(token);
-  // const orderData = await foodOrderFinalSetup();
-  // console.log(`ORDER DATA:`, orderData);
+  await getVendorFoodIds();
+  await getVendorOrders();
 });
 </script>
 <template>
