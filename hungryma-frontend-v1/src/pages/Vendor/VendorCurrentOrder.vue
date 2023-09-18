@@ -17,9 +17,11 @@ const {
   getVendorOrderItems,
   setVendorOrderList,
   getOrderName,
+  setVendorOrderList3,
 } = vendorMenu2Store;
 
-const { vendorMenuIds, vendorOrderList } = storeToRefs(vendorMenu2Store);
+const { vendorMenuIds, vendorOrderList, vendorOrderList3 } =
+  storeToRefs(vendorMenu2Store);
 
 // Set Up: get all vendor Food Ids
 async function getVendorFoodIds() {
@@ -67,8 +69,7 @@ async function getUserInfo() {
   console.log(`currentUser from pinia: `, currentUser);
 }
 
-// Set Up: Run get User info when page is Mounted
-onMounted(async () => {
+async function runPage() {
   await getUserInfo();
   // console.log(`getUserInfo has completed. Check pinia store for changes`);
 
@@ -76,7 +77,24 @@ onMounted(async () => {
   await getVendorFoodIds();
   await getVendorOrders();
   await getVendorOrderName();
-});
+  setVendorOrderList3();
+  console.log(`Im being runPAGE`);
+}
+
+runPage();
+
+// Set Up: Run get User info when page is Mounted
+// onMounted(async () => {
+//   await getUserInfo();
+//   // console.log(`getUserInfo has completed. Check pinia store for changes`);
+
+//   // get all orderItem from the vendorMenuIds
+//   await getVendorFoodIds();
+//   await getVendorOrders();
+//   await getVendorOrderName();
+//   // setVendorOrderList3();\
+//   console.log(`Im being MOUNTED`);
+// });
 </script>
 <template>
   <div class="pb-20">
@@ -102,39 +120,39 @@ onMounted(async () => {
           Current Orders
         </h1>
       </div>
-      <div class="flex-1 py-10 bg-orange-300">
+      <div class="flex justify-center flex-1 py-10 bg-orange-300">
         <!-- table components start-->
         <div
-          class="shadow-lg rounded-lg overflow-auto max-h-[550px] mx-4 md:mx-10 bg-white"
+          class="shadow-lg rounded-lg overflow-auto max-h-[550px] mx-4 md:mx-10 bg-white w-2/3"
         >
           <table class="w-full overflow-auto table-fixed">
             <thead class="sticky top-0">
               <tr class="bg-gray-100">
                 <th
-                  class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
+                  class="w-1/4 px-6 py-4 font-bold text-center text-gray-600 uppercase"
                 >
                   Order Id
                 </th>
                 <th
-                  class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
+                  class="w-2/4 px-6 py-4 font-bold text-center text-gray-600 uppercase"
                 >
                   Items
                 </th>
                 <th
-                  class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
+                  class="w-1/4 px-6 py-4 font-bold text-center text-gray-600 uppercase"
                 >
                   Status
                 </th>
-                <th
+                <!-- <th
                   class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
                 >
                   Phone
-                </th>
+                </th> -->
               </tr>
             </thead>
             <tbody class="bg-white">
               <!-------------- Example to loop for : START  ----------------------------->
-              <tr>
+              <!-- <tr>
                 <td class="px-6 py-4 border-b border-gray-200">John Doe</td>
                 <td class="px-6 py-4 truncate border-b border-gray-200">
                   <div>Chicken Burger</div>
@@ -146,49 +164,27 @@ onMounted(async () => {
                     class="px-2 py-1 text-xs text-white bg-yellow-500 rounded-full"
                     >Pending</span
                   >
+                </td> -->
+              <tr v-for="item in vendorOrderList3">
+                <td class="px-6 py-4 text-center border-b border-gray-200">
+                  {{ item.orderId }}
                 </td>
-                <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td>
+                <td
+                  class="px-6 py-4 text-center truncate border-b border-gray-200"
+                >
+                  <div v-for="foodItem in item.orders">
+                    {{ foodItem.foodName }}
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-center border-b border-gray-200">
+                  <span
+                    class="px-2 py-1 text-xs text-white bg-yellow-500 rounded-full"
+                    >Pending</span
+                  >
+                </td>
+                <!-- <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td> -->
               </tr>
               <!-------------- Example to loop for : END  ----------------------------->
-              <tr>
-                <td class="px-6 py-4 border-b border-gray-200">Jane Doe</td>
-                <td class="px-6 py-4 truncate border-b border-gray-200">
-                  janedoe@gmail.com
-                </td>
-                <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td>
-                <td class="px-6 py-4 border-b border-gray-200">
-                  <span
-                    class="px-2 py-1 text-xs text-white bg-red-500 rounded-full"
-                    >Inactive</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td class="px-6 py-4 border-b border-gray-200">Jane Doe</td>
-                <td class="px-6 py-4 truncate border-b border-gray-200">
-                  janedoe@gmail.com
-                </td>
-                <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td>
-                <td class="px-6 py-4 border-b border-gray-200">
-                  <span
-                    class="px-2 py-1 text-xs text-white bg-red-500 rounded-full"
-                    >Inactive</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td class="px-6 py-4 border-b border-gray-200">Jane Doe</td>
-                <td class="px-6 py-4 truncate border-b border-gray-200">
-                  janedoe@gmail.com
-                </td>
-                <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td>
-                <td class="px-6 py-4 border-b border-gray-200">
-                  <span
-                    class="px-2 py-1 text-xs text-white bg-red-500 rounded-full"
-                    >Inactive</span
-                  >
-                </td>
-              </tr>
 
               <!-- Add more rows here -->
             </tbody>

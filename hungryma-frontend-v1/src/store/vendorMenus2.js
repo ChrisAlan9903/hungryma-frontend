@@ -85,5 +85,25 @@ export const useVendorMenus2Store = defineStore("vendorMenus2", {
         }
       }
     },
+    setVendorOrderList3() {
+      const items = this.vendorOrderList2;
+      const itemSorted = this.vendorOrderList2.reduce((acc, item) => {
+        const existingOrder = acc.find(
+          (order) => order.orderId === item.orderId
+        );
+
+        if (existingOrder) {
+          existingOrder.orders.push(item);
+        } else {
+          acc.push({ orderId: item.orderId, orders: [item] });
+        }
+
+        return acc;
+      }, []);
+      this.vendorOrderList3 = itemSorted;
+
+      // console.log(JSON.stringify(itemSorted, null, 2));
+      //   console.log(JSON.stringify(itemSorted, null, 1));
+    },
   },
 });
