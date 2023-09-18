@@ -3,8 +3,8 @@ import { defineStore } from "pinia";
 export const useVendorMenusStore = defineStore("vendorMenus", {
   state: () => ({
     vendorMenuList: null,
-    vendorOrderItems: null,
-    vendorMenuIds: null,
+    vendorOrderItems: null, // list of all orders for a vendors
+    vendorMenuIds: null, //list of all vendor foodItems
     vendorCompleteOrder: null,
   }),
   actions: {
@@ -89,6 +89,20 @@ export const useVendorMenusStore = defineStore("vendorMenus", {
         console.error(error);
       }
     },
+    async foodOrderFinalSetup(token) {
+      // const finalFoodOrderArr = [];
+      for (const foodItem of this.vendorOrderItems) {
+        const foodName = await getOrderFoodName(token, foodItem.foodItemId);
+        foodItem.foodName = foodName.name;
+        // const foodObject = {
+        //   ...foodItem,
+        //   foodName: foodName.name,
+        // };
+        // finalFoodOrderArr.push(foodObject);
+      }
+
+      // return finalFoodOrderArr;
+    },
   },
 });
 
@@ -98,3 +112,27 @@ export const useVendorMenusStore = defineStore("vendorMenus", {
 //     /*ids of food item with same orderiD*/
 //   ],
 // };
+// const items = [
+//   { id: 5, orderId: 9, foodItemId: 24, quantity: 1, price: 20.0 },
+//   { id: 5, orderId: 5, foodItemId: 24, quantity: 1, price: 20.0 },
+//   { id: 5, orderId: 9, foodItemId: 24, quantity: 1, price: 20.0 },
+//   { id: 5, orderId: 5, foodItemId: 24, quantity: 1, price: 20.0 },
+//   { id: 5, orderId: 9, foodItemId: 24, quantity: 1, price: 20.0 },
+// ];
+
+// const itemSorted = [
+//   {
+//     orderId: 5,
+//     orders: [
+//       { id: 5, orderId: 5, foodItemId: 24, quantity: 1, price: 20.0 },
+//       { id: 5, orderId: 5, foodItemId: 24, quantity: 1, price: 20.0 },
+//     ],
+//   },
+//   {
+//     orderId: 9,
+//     orders: [
+//       { id: 5, orderId: 5, foodItemId: 24, quantity: 1, price: 20.0 },
+//       { id: 5, orderId: 5, foodItemId: 24, quantity: 1, price: 20.0 },
+//     ],
+//   },
+// ];

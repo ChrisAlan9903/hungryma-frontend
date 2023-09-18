@@ -17,6 +17,7 @@ const {
   setVendorMenuIds,
   getVendorOrderItems,
   getOrderFoodName,
+  foodOrderFinalSetup,
 } = vendorMenuStore;
 
 const { vendorOrderItems } = storeToRefs(vendorMenuStore);
@@ -32,23 +33,8 @@ console.log(`Extracted foodIds:`, foodIds.value);
 setVendorMenuIds(foodIds.value);
 
 // // get all orderItem from the vendorMenuIds
-// getVendorOrderItems(token, vendorMenuIds.value);
 
 // set up the final food Order object
-
-async function foodOrderFinalSetup() {
-  const finalFoodOrderArr = [];
-  for (const foodItem of vendorOrderItems) {
-    const foodName = await getOrderFoodName(token, foodItem.foodItemId);
-    const foodObject = {
-      ...foodItem,
-      foodName: foodName.name,
-    };
-    finalFoodOrderArr.push(foodObject);
-  }
-
-  return finalFoodOrderArr;
-}
 
 // Set Up: get Token from localStorage
 const accessToken = localStorage.getItem("accessToken");
@@ -75,8 +61,9 @@ onMounted(async () => {
   getVendorOrderItems(token, vendorMenuIds.value);
 
   // setting up all FoodOrder object
-  const orderData = await foodOrderFinalSetup();
-  console.log(`ORDER DATA:`, orderData);
+  await foodOrderFinalSetup(token);
+  // const orderData = await foodOrderFinalSetup();
+  // console.log(`ORDER DATA:`, orderData);
 });
 </script>
 <template>
