@@ -150,22 +150,25 @@ const statusClass = (orderStatus) => {
               </tr>
             </thead>
             <tbody class="bg-white">
-              <tr
-                v-for="item in vendorOrderList4"
-                :key="item.orderId"
-                v-if="item.orderStatus === 'pending'"
-              >
-                <td class="px-6 py-4 text-center border-b border-gray-200">
+              <tr v-for="item in vendorOrderList4" :key="item.orderId">
+                <td
+                  v-if="item.orderStatus === 'pending'"
+                  class="px-6 py-4 text-center border-b border-gray-200"
+                >
                   {{ item.orderId }}
                 </td>
                 <td
+                  v-if="item.orderStatus === 'pending'"
                   class="px-6 py-4 text-center truncate border-b border-gray-200"
                 >
                   <div v-for="foodItem in item.orders">
                     {{ foodItem.foodName }}
                   </div>
                 </td>
-                <td class="px-6 py-4 text-center border-b border-gray-200">
+                <td
+                  v-if="item.orderStatus === 'pending'"
+                  class="px-6 py-4 text-center border-b border-gray-200"
+                >
                   <span
                     :class="[
                       'px-2 py-1 text-xs text-white rounded-full cursor-pointer',

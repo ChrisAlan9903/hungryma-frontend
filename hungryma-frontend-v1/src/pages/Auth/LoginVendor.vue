@@ -3,15 +3,31 @@ import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import LoginVendorForm from "@/components/Auth/LoginVendorForm.vue";
 // import LoginVendorForm from "../components/Auth/LoginVendorForm.vue";
+import { useReloadPageStore } from "../../store/reloadPage";
+import { storeToRefs } from "pinia";
+
+const reloadPageStore = useReloadPageStore();
+const { setReloadOnce } = reloadPageStore;
+const { reloadOnce } = storeToRefs(reloadPageStore);
+
+// function reloadPage() {
+//   if (reloadOnce.value == false) {
+//     console.log(`reloadOnce value:`);
+//     window.location.reload();
+//     console.log(`page reloaded`);
+//     setReloadOnce(true);
+//   }
+// }
+// // reloadPage();
 </script>
 <template>
   <div
     id="login-page"
-    class="w-full h-screen flex flex-col gap-4 items-center relative overflow-hidden"
+    class="relative flex flex-col items-center w-full h-screen gap-4 overflow-hidden"
   >
     <!-- bg image for Auth -->
     <img
-      class="w-full absolute -z-20"
+      class="absolute w-full -z-20"
       src="@/assets/chef-2.jpg"
       alt="bg-image"
     />
@@ -43,7 +59,7 @@ import LoginVendorForm from "@/components/Auth/LoginVendorForm.vue";
     <!-- end of navbar for Auth -->
     <div
       id="render-login"
-      class="w-full h-full flex items-center justify-center"
+      class="flex items-center justify-center w-full h-full"
     >
       <LoginVendorForm />
       <!-- end of Login form -->

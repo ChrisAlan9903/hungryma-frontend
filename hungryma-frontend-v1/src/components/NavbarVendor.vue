@@ -5,6 +5,11 @@ import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import { useRouter } from "vue-router";
 // import { defineProps } from "vue";
+import { storeToRefs } from "pinia";
+import { useVendorMenus2Store } from "../store/vendorMenus2";
+
+const vendorMenus2Store = useVendorMenus2Store();
+const { resetAllVendorOrderList } = vendorMenus2Store;
 
 // const vendorPage = ref("");
 
@@ -15,6 +20,7 @@ const router = useRouter();
 function handleLogout() {
   localStorage.removeItem("accessToken");
   alert(`You have logged out !`);
+  resetAllVendorOrderList();
   router.push("/login/vendor");
 }
 
@@ -23,9 +29,9 @@ function handleLogout() {
 <template>
   <div>
     <!-- navbar for VendorView -->
-    <nav class="w-full p-8 flex justify-between bg-gray-200 bg-opacity-30">
+    <nav class="flex justify-between w-full p-8 bg-gray-200 bg-opacity-30">
       <RouterLink :to="{ name: 'vendor-current-order' }">
-        <h1 class="logo cursor-pointer">
+        <h1 class="cursor-pointer logo">
           <span class="text-orange-500">H</span>ungryMa<span
             class="text-orange-500"
             >?</span
@@ -70,9 +76,9 @@ function handleLogout() {
 
         <button
           @click="handleLogout"
-          class="flex items-center gap-1 text-xs bg-orange-800 text-white border border-transparent rounded-xl px-3 py-1 transition-all delay-75 hover:bg-orange-500"
+          class="flex items-center gap-1 px-3 py-1 text-xs text-white transition-all delay-75 bg-orange-800 border border-transparent rounded-xl hover:bg-orange-500"
         >
-          <i class="material-icons text-white"> logout </i>
+          <i class="text-white material-icons"> logout </i>
 
           <p class="">Log Out</p>
         </button>

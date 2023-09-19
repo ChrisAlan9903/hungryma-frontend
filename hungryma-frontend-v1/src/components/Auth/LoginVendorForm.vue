@@ -50,9 +50,9 @@ async function getVendorFoodIds(token) {
 }
 
 // get all orderItem from the vendorMenuIds
-async function getVendorOrders() {
+async function getVendorOrders(token) {
   const allVendorOrderItems = await getVendorOrderItems(
-    accessToken,
+    token,
     vendorMenuIds.value
   );
   // console.log(allVendorOrderItems);
@@ -60,8 +60,8 @@ async function getVendorOrders() {
 }
 
 // get all orderItem + foodname
-async function getVendorOrderName() {
-  await getOrderName(accessToken);
+async function getVendorOrderName(token) {
+  await getOrderName(token);
 }
 
 // set up the final food Order object by grouping
@@ -110,8 +110,8 @@ const handleLogin = async (e) => {
 
     // get all orderItem from the vendorMenuIds
     await getVendorFoodIds(accessToken);
-    await getVendorOrders();
-    await getVendorOrderName();
+    await getVendorOrders(accessToken);
+    await getVendorOrderName(accessToken);
     setVendorOrderList3();
     await getOrderStatus(accessToken);
     console.log(`Im being runPAGE`);

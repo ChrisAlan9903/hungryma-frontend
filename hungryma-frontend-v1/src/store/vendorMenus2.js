@@ -134,5 +134,11 @@ export const useVendorMenus2Store = defineStore("vendorMenus2", {
         }
       }
     },
+    resetAllVendorOrderList() {
+      this.vendorOrderList = [];
+      this.vendorOrderList2 = [];
+      this.vendorOrderList3 = [];
+      this.vendorOrderList4 = [];
+    },
   },
 });
