@@ -100,13 +100,13 @@ async function runPage() {
 const statusClass = (orderStatus) => {
   switch (orderStatus) {
     case "pending":
-      return "bg-yellow-500"; // Background color for 'pending'
+      return "bg-yellow-500 "; // Background color for 'pending'
     case "completed":
-      return "bg-green-500"; // Background color for 'completed'
+      return "bg-green-500 "; // Background color for 'completed'
     case "cancelled":
-      return "bg-red-500"; // Background color for 'cancelled'
+      return "bg-red-500 "; // Background color for 'cancelled'
     default:
-      return "bg-gray-300"; // Default background color
+      return "bg-gray-300 "; // Default background color
   }
 };
 </script>
@@ -150,7 +150,11 @@ const statusClass = (orderStatus) => {
               </tr>
             </thead>
             <tbody class="bg-white">
-              <tr v-for="item in vendorOrderList4">
+              <tr
+                v-for="item in vendorOrderList4"
+                :key="item.orderId"
+                v-if="item.orderStatus === 'pending'"
+              >
                 <td class="px-6 py-4 text-center border-b border-gray-200">
                   {{ item.orderId }}
                 </td>
@@ -164,7 +168,7 @@ const statusClass = (orderStatus) => {
                 <td class="px-6 py-4 text-center border-b border-gray-200">
                   <span
                     :class="[
-                      'px-2 py-1 text-xs text-white rounded-full',
+                      'px-2 py-1 text-xs text-white rounded-full cursor-pointer',
                       statusClass(item.orderStatus),
                     ]"
                     >{{ item.orderStatus }}</span
