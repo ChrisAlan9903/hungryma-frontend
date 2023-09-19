@@ -97,20 +97,22 @@ async function runPage() {
 //   // setVendorOrderList3();\
 //   console.log(`Im being MOUNTED`);
 // });
+const statusClass = (orderStatus) => {
+  switch (orderStatus) {
+    case "pending":
+      return "bg-yellow-500"; // Background color for 'pending'
+    case "completed":
+      return "bg-green-500"; // Background color for 'completed'
+    case "cancelled":
+      return "bg-red-500"; // Background color for 'cancelled'
+    default:
+      return "bg-gray-300"; // Default background color
+  }
+};
 </script>
 <template>
   <div class="pb-20">
     <NavbarVendor vendorPage="current-order" />
-    <!-- test pinia section -->
-    <!-- <section class="w-full h-56 bg-slate-300">
-      <div class="flex flex-col p-20">
-        <h2 class="flex-wrap">
-          token: <span>{{ token }}</span>
-        </h2>
-        <p>currentUser:{{ currentUser }}</p>
-      </div>
-    </section> -->
-
     <section
       id="ongoing-order"
       class="flex flex-col h-screen max-h-screen m-10 overflow-hidden bg-red-400 border-2 border-gray-800 shadow-lg rounded-3xl"
@@ -145,28 +147,9 @@ async function runPage() {
                 >
                   Status
                 </th>
-                <!-- <th
-                  class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase"
-                >
-                  Phone
-                </th> -->
               </tr>
             </thead>
             <tbody class="bg-white">
-              <!-------------- Example to loop for : START  ----------------------------->
-              <!-- <tr>
-                <td class="px-6 py-4 border-b border-gray-200">John Doe</td>
-                <td class="px-6 py-4 truncate border-b border-gray-200">
-                  <div>Chicken Burger</div>
-                  <div>Hawaiian Pizza</div>
-                  <div>Lamb Steak</div>
-                </td>
-                <td class="px-6 py-4 border-b border-gray-200">
-                  <span
-                    class="px-2 py-1 text-xs text-white bg-yellow-500 rounded-full"
-                    >Pending</span
-                  >
-                </td> -->
               <tr v-for="item in vendorOrderList4">
                 <td class="px-6 py-4 text-center border-b border-gray-200">
                   {{ item.orderId }}
@@ -180,15 +163,14 @@ async function runPage() {
                 </td>
                 <td class="px-6 py-4 text-center border-b border-gray-200">
                   <span
-                    class="px-2 py-1 text-xs text-white bg-yellow-500 rounded-full"
+                    :class="[
+                      'px-2 py-1 text-xs text-white rounded-full',
+                      statusClass(item.orderStatus),
+                    ]"
                     >{{ item.orderStatus }}</span
                   >
                 </td>
-                <!-- <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td> -->
               </tr>
-              <!-------------- Example to loop for : END  ----------------------------->
-
-              <!-- Add more rows here -->
             </tbody>
           </table>
         </div>
