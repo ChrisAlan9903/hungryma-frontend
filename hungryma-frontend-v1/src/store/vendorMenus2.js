@@ -6,6 +6,7 @@ export const useVendorMenus2Store = defineStore("vendorMenus2", {
     vendorOrderList: null, // list of all vendor orders based on matching food ids
     vendorOrderList2: [], // list of vendor orders + food name
     vendorOrderList3: null, // list of GROUPED vendor orders
+    vendorOrderList4: [], // list with orderStatus
   }),
   actions: {
     async getVendorMenus(token) {
@@ -78,6 +79,7 @@ export const useVendorMenus2Store = defineStore("vendorMenus2", {
             options
           );
           const data = await response.json();
+
           //   console.log(`Data for ID ${id}:`, data);
           this.vendorOrderList2.push({ ...id, foodName: data.name });
         } catch (err) {
@@ -104,6 +106,33 @@ export const useVendorMenus2Store = defineStore("vendorMenus2", {
 
       // console.log(JSON.stringify(itemSorted, null, 2));
       //   console.log(JSON.stringify(itemSorted, null, 1));
+    },
+    async getOrderStatus(token) {
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      };
+
+      for (const item of this.vendorOrderList3) {
+        try {
+          // Task: getting OrderStatus from OrderId
+          const orderStatusRes = await fetch(
+            `http://localhost:3000/orders/${item.orderId}`,
+            options
+          );
+          const data = await orderStatusRes.json();
+          console.log(`Data for ID ${item}:`, data);
+
+          this.vendorOrderList4.push({
+            ...item,
+            orderStatus: data.orderStatus,
+          });
+        } catch (err) {
+          console.error(`Error for ID ${item}:`, err);
+        }
+      }
     },
   },
 });

@@ -18,6 +18,7 @@ const {
   setVendorOrderList,
   getOrderName,
   setVendorOrderList3,
+  getOrderStatus,
 } = vendorMenu2Store;
 
 const { vendorMenuIds, vendorOrderList, vendorOrderList3 } =
@@ -78,6 +79,7 @@ async function runPage() {
   await getVendorOrders();
   await getVendorOrderName();
   setVendorOrderList3();
+  await getOrderStatus(accessToken);
   console.log(`Im being runPAGE`);
 }
 
