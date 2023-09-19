@@ -4,6 +4,8 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useCurrentUserStore } from "../../store/currentUser";
 import { useVendorMenusStore } from "../../store/vendorMenus";
+import { useVendorMenus2Store } from "../../store/vendorMenus2";
+import { storeToRefs } from "pinia";
 
 const currentUserStore = useCurrentUserStore();
 const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
@@ -17,6 +19,68 @@ const visibility = ref(false);
 
 const email = ref("");
 const password = ref("");
+
+// Set Up: Setting Up Vendor All Orders
+// Part 1: Setting up pinia store
+const vendorMenu2Store = useVendorMenus2Store();
+const {
+  getVendorMenus,
+  setVendorMenuIds,
+  getVendorOrderItems,
+  setVendorOrderList,
+  getOrderName,
+  setVendorOrderList3,
+  getOrderStatus,
+} = vendorMenu2Store;
+
+const { vendorMenuIds, vendorOrderList, vendorOrderList3, vendorOrderList4 } =
+  storeToRefs(vendorMenu2Store);
+
+// Set Up: get all vendor Food Ids
+async function getVendorFoodIds(token) {
+  const allVendorFood = await getVendorMenus(token);
+  console.log(`allVendorFood:`, allVendorFood);
+
+  const menuIds = [];
+  for (const food of allVendorFood) {
+    menuIds.push(food.id);
+  }
+  // console.log(`menuIds:`, menuIds);
+  setVendorMenuIds(menuIds);
+}
+
+// get all orderItem from the vendorMenuIds
+async function getVendorOrders() {
+  const allVendorOrderItems = await getVendorOrderItems(
+    accessToken,
+    vendorMenuIds.value
+  );
+  // console.log(allVendorOrderItems);
+  setVendorOrderList(allVendorOrderItems);
+}
+
+// get all orderItem + foodname
+async function getVendorOrderName() {
+  await getOrderName(accessToken);
+}
+
+// set up the final food Order object by grouping
+
+// Set Up: get Token from localStorage
+const accessToken = localStorage.getItem("accessToken");
+
+// Set Up: Creating function to get userInfo based on the token
+async function getUserInfo() {
+  // get current vendor Information to store in Pinia
+  const accessToken = localStorage.getItem("access_token");
+  // console.log(`accessToken from localStorage:`, accessToken);
+  // console.log(`CP: does it pass here?`);
+  setToken(accessToken);
+  // console.log(`CP: does it pass here too?`);
+  // console.log(`token from pinia:`, token);
+  await getCurrentUser();
+  // console.log(`currentUser from pinia: `, currentUser);
+}
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -38,8 +102,19 @@ const handleLogin = async (e) => {
     setToken(accessToken);
     await getCurrentUser();
     const vendorAllMenu = await getMenus(accessToken);
-    console.log(`getMenus output:`, vendorAllMenu);
+    // console.log(`getMenus output:`, vendorAllMenu);
     setVendorMenuList(vendorAllMenu);
+
+    await getUserInfo();
+    // console.log(`getUserInfo has completed. Check pinia store for changes`);
+
+    // get all orderItem from the vendorMenuIds
+    await getVendorFoodIds(accessToken);
+    await getVendorOrders();
+    await getVendorOrderName();
+    setVendorOrderList3();
+    await getOrderStatus(accessToken);
+    console.log(`Im being runPAGE`);
 
     router.push({ name: "vendor-current-order" });
   }
