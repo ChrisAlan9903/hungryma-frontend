@@ -21,7 +21,7 @@ const {
   getOrderStatus,
 } = vendorMenu2Store;
 
-const { vendorMenuIds, vendorOrderList, vendorOrderList3 } =
+const { vendorMenuIds, vendorOrderList, vendorOrderList3, vendorOrderList4 } =
   storeToRefs(vendorMenu2Store);
 
 // Set Up: get all vendor Food Ids
@@ -167,7 +167,7 @@ runPage();
                     >Pending</span
                   >
                 </td> -->
-              <tr v-for="item in vendorOrderList3">
+              <tr v-for="item in vendorOrderList4">
                 <td class="px-6 py-4 text-center border-b border-gray-200">
                   {{ item.orderId }}
                 </td>
@@ -181,7 +181,7 @@ runPage();
                 <td class="px-6 py-4 text-center border-b border-gray-200">
                   <span
                     class="px-2 py-1 text-xs text-white bg-yellow-500 rounded-full"
-                    >Pending</span
+                    >{{ item.orderStatus }}</span
                   >
                 </td>
                 <!-- <td class="px-6 py-4 border-b border-gray-200">555-555-5555</td> -->
