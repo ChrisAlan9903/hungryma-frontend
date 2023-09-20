@@ -78,21 +78,21 @@ const handleSubmitOrder = async () => {
 <template>
   <NavbarUser userPage="user-cart" />
   <!-- Cart Item Sections -->
-  <section class="flex w-full h-screen max-h-screen bg-red-100">
+  <section class="flex w-full h-screen max-h-screen">
     <!-- Added item list  -->
-    <div class="w-2/3 p-20 bg-yellow-100">
+    <div class="w-2/3 px-20 pt-5 pb-20">
       <!-- inner container -->
-      <div class="flex flex-col w-full h-full bg-green-200">
+      <div class="flex flex-col w-full h-full">
         <!-- title for each part -->
         <div
-          class="flex items-center justify-between pt-6 pb-3 bg-pink-200 border-b-2 border-slate-400"
+          class="flex items-center justify-between pt-6 pb-3 border-b-2 border-slate-400"
         >
           <h1 class="text-4xl font-bold">Shopping Cart</h1>
           <!-- <h3 class="text-xl font-bold">{{ cartItems.length }} Items</h3> -->
           <h3 class="text-xl font-bold">{{ sumQuantity }} Items</h3>
         </div>
         <!-- item list container -->
-        <div class="flex-1 w-full bg-purple-100">
+        <div class="flex-1 w-full">
           <!-- column description -->
           <div class="flex justify-between w-full mt-6 mb-3">
             <p class="w-2/5 text-left text-gray-400">Product Details</p>
@@ -105,8 +105,15 @@ const handleSubmitOrder = async () => {
           <div
             class="w-full h-full overflow-auto xl:max-h-[420px] 2xl:max-h-[420px] mt-6"
           >
+            <div
+              v-if="cartItems.length === 0"
+              class="w-full p-20 text-3xl text-center text-gray-400"
+            >
+              No item in carts
+            </div>
             <!-- item list -->
             <CartItem
+              v-else
               v-for="order in cartItems"
               :key="order"
               :cartItem="order"
@@ -119,17 +126,17 @@ const handleSubmitOrder = async () => {
     </div>
 
     <!-- Total amount  -->
-    <div class="w-1/3 px-10 py-20 bg-orange-100">
+    <div class="w-1/3 px-10 pt-5 pb-20 bg-orange-50">
       <!-- inner container -->
-      <div class="w-full h-full bg-green-200">
+      <div class="w-full h-full">
         <!-- title for each part -->
         <div
-          class="flex items-center justify-between pt-6 pb-3 bg-pink-200 border-b-2 border-slate-400"
+          class="flex items-center justify-between pt-6 pb-3 border-b-2 border-slate-400"
         >
           <h2 class="text-3xl font-bold">Order Summary</h2>
         </div>
         <!-- total amount wrapper -->
-        <div class="w-full bg-purple-100">
+        <div class="w-full">
           <!-- total item section -->
           <div class="px-8 py-5 h-1/2">
             <div id="subtotal-item-1" class="flex items-center justify-between">
@@ -192,7 +199,7 @@ const handleSubmitOrder = async () => {
       </div>
     </div>
   </section>
-  <section class="flex items-center justify-center h-56">
+  <section class="flex items-center justify-center h-56 bg-slate-100">
     <h2 class="text-4xl">Footer</h2>
   </section>
 </template>
