@@ -140,7 +140,7 @@ const statusClass = (orderStatus) => {
                 <th
                   class="w-2/4 px-6 py-4 font-bold text-center text-gray-600 uppercase"
                 >
-                  Items
+                  Items (Quantity)
                 </th>
                 <th
                   class="w-1/4 px-6 py-4 font-bold text-center text-gray-600 uppercase"
@@ -159,10 +159,13 @@ const statusClass = (orderStatus) => {
                 </td>
                 <td
                   v-if="item.orderStatus === 'pending'"
-                  class="px-6 py-4 text-center truncate border-b border-gray-200"
+                  class="px-6 py-4 text-left truncate border-b border-gray-200"
                 >
                   <div v-for="foodItem in item.orders">
                     {{ foodItem.foodName }}
+                    <span class="text-xs font-semibold text-gray-400"
+                      >({{ foodItem.quantity }})</span
+                    >
                   </div>
                 </td>
                 <td
