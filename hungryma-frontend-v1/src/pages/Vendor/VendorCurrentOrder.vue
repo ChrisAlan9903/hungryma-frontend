@@ -159,7 +159,7 @@ const statusClass = (orderStatus) => {
                 </td>
                 <td
                   v-if="item.orderStatus === 'pending'"
-                  class="px-6 py-4 text-left truncate border-b border-gray-200"
+                  class="px-6 py-4 text-center truncate border-b border-gray-200"
                 >
                   <div v-for="foodItem in item.orders">
                     {{ foodItem.foodName }}

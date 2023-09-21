@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 import NavbarUser from "../../components/NavbarUser.vue";
 import CartItem from "../../components/User/CartItem.vue";
 import { storeToRefs } from "pinia";
+import Footer from "../../components/Footer.vue";
 
 // TO EDIT: temporary variable to set how many times to render child components
 
@@ -199,7 +200,5 @@ const handleSubmitOrder = async () => {
       </div>
     </div>
   </section>
-  <section class="flex items-center justify-center h-56 bg-slate-100">
-    <h2 class="text-4xl">Footer</h2>
-  </section>
+  <Footer />
 </template>

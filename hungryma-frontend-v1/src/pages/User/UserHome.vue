@@ -1,4 +1,5 @@
 <script setup>
+import Footer from "../../components/Footer.vue";
 import { RouterLink } from "vue-router";
 import NavbarUser from "../../components/NavbarUser.vue";
 import { useCurrentUserStore } from "../../store/currentUser";
@@ -6,7 +7,7 @@ const currentUserStore = useCurrentUserStore();
 const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
 </script>
 <template>
-  <NavbarUser userPage="user-home" />
+  <NavbarUser userPage="user-home" class="z-20" />
   <section>
     <div class="w-full bg-yellow-100 h-[650px] relative flex justify-center">
       <!-- hero bg image -->
@@ -30,7 +31,5 @@ const { token, currentUser, setToken, getCurrentUser } = currentUserStore;
       </div>
     </div>
   </section>
-  <section class="flex items-center justify-center h-56">
-    <h2 class="text-4xl">Footer</h2>
-  </section>
+  <Footer />
 </template>

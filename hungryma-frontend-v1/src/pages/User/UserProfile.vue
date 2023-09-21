@@ -1,6 +1,7 @@
 <script setup>
 // import NavbarVendor from "../../components/NavbarVendor.vue";
 import NavbarUser from "../../components/NavbarUser.vue";
+import Footer from "../../components/Footer.vue";
 import { RouterLink, useRouter } from "vue-router";
 import { useCurrentUserStore } from "../../store/currentUser";
 import { ref, onMounted, watch, onBeforeMount } from "vue";
@@ -61,7 +62,10 @@ onBeforeMount(async () => {
 </script>
 <template>
   <NavbarUser userPage="user-profile" />
-  <section id="ongoing-order" class="flex justify-center max-h-screen p-3 m-24">
+  <section
+    id="ongoing-order"
+    class="flex justify-center max-h-screen p-3 mt-24 mb-32"
+  >
     <div
       v-if="currentUserInfo"
       class="w-1/2 overflow-hidden bg-white border-2 border-black rounded-lg shadow-xl"
@@ -131,4 +135,5 @@ onBeforeMount(async () => {
       <p>Loading user Info..</p>
     </div>
   </section>
+  <Footer class="" />
 </template>

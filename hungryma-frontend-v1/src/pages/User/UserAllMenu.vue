@@ -5,6 +5,7 @@ import NavbarUser from "../../components/NavbarUser.vue";
 import UserMenuCard from "../../components/User/UserMenuCard.vue";
 import AddedToCartAlert from "../../components/User/AddedToCartAlert.vue";
 import MenuSearchBar from "../../components/User/MenuSearchBar.vue";
+import Footer from "../../components/Footer.vue";
 import { useCurrentUserStore } from "../../store/currentUser";
 import { useUserAllMenuStore } from "../../store/userAllMenu";
 
@@ -169,9 +170,7 @@ const setFilterVendor = (filter) => {
     </section>
 
     <!--footer section -->
-    <section class="flex items-center justify-center h-56 bg-slate-100">
-      <h2 class="text-4xl">Footer</h2>
-    </section>
+    <Footer />
   </div>
 </template>
 
