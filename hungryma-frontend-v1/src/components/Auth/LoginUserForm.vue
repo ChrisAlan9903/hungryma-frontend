@@ -29,10 +29,16 @@ const handleLogin = async (e) => {
 
   if (!accessToken) {
     alert(loginFail);
+  } else if (loginResponse.role === "vendor") {
+    alert(
+      "You logging in as a vendor. You will be directed to vendor login page."
+    );
+    router.push({ name: "login-vendor" });
   } else {
     alert(loginSuccess);
     localStorage.setItem("accessToken", accessToken);
     setToken(accessToken);
+    console.log("Check role:", loginResponse.role);
 
     // setting currentUser in Pinia
     await getCurrentUser();

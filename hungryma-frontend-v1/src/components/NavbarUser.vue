@@ -50,7 +50,7 @@ function handleLogout() {
         <RouterLink
           :to="{ name: 'user-all-menu' }"
           :class="[
-            'border border-transparent rounded-xl px-3 py-1   transition-all delay-75 flex justify-center items-center',
+            'border border-transparent rounded-xl px-3 py-1  transition-all delay-75 flex justify-center items-center',
             userPage === `user-all-menu`
               ? 'bg-orange-500 text-white hover:bg-orange-600'
               : 'hover:border-orange-500 hover:text-orange-500',

@@ -6,11 +6,11 @@ import LoginUserForm from "@/components/Auth/LoginUserForm.vue";
 <template>
   <div
     id="login-page"
-    class="w-full h-screen flex flex-col gap-4 items-center relative overflow-hidden"
+    class="relative flex flex-col items-center w-full h-screen gap-4 overflow-hidden"
   >
     <!-- bg image for Auth -->
     <img
-      class="w-full absolute -z-20"
+      class="absolute w-full -z-20"
       src="@/assets/cover-3.jpg"
       alt="bg-image"
     />
@@ -42,7 +42,7 @@ import LoginUserForm from "@/components/Auth/LoginUserForm.vue";
     <!-- end of navbar for Auth -->
     <div
       id="render-login"
-      class="w-full h-full flex items-center justify-center"
+      class="flex items-center justify-center w-full h-full"
     >
       <!-- <UserLogin3 v-if="selectedLogin === 'user'" />
       <VendorLogin v-if="selectedLogin === 'vendor'" /> -->

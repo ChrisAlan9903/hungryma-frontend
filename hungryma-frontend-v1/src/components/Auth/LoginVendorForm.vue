@@ -94,6 +94,11 @@ const handleLogin = async (e) => {
 
   if (!accessToken) {
     alert(loginFail);
+  } else if (loginResponse.role === "customer") {
+    alert(
+      "You logging in as a customer. You will be directed to vendor login page."
+    );
+    router.push({ name: "login-user" });
   } else {
     alert(loginSuccess);
     localStorage.setItem("accessToken", accessToken);
